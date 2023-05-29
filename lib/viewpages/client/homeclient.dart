@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:limoapplication/main.dart';
 import 'package:limoapplication/viewpages/client/fullDetailJobs.dart';
 import 'package:limoapplication/viewpages/client/trackingProgressClient.dart';
+import 'package:limoapplication/model/modelproduct/modelproduct.dart';
 
 class HomeClient extends StatefulWidget {
   @override
@@ -12,6 +13,15 @@ class HomeClient extends StatefulWidget {
 
 class _HomeClientState extends State<HomeClient> {
   int number = 0;
+
+  late Future<ModelProduct> product;
+
+  @override
+  void initState() {
+    super.initState();
+    product = ModelProduct.getProductByUsername();
+  }
+
   @override
   Widget build(BuildContext context) {
     final MediaQueryHeight = MediaQuery.of(context).size.height;
@@ -76,380 +86,178 @@ class _HomeClientState extends State<HomeClient> {
               ),
             ),
           ),
-          ListView(
-            children: [
-              Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.all(20),
-                    width: MediaQueryWidth * 8,
-                    height: BodyHeight * 0.25,
-                    decoration: BoxDecoration(
-                      color: Colors.blueGrey.shade100.withOpacity(0.6),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              "Simple task(s) - Front-End Developer Animations (using Javascript/CSS/HTML)",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.5),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              "Hello, I'm looking for a developer with knowledge in Javascript, CSS and HTML. Additionaly, the developer should be familiar with",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  height: 1.5),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+
+          FutureBuilder<ModelProduct>(
+              future: product,
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    print('Waiting...');
+                    return const Center(child: CircularProgressIndicator());
+                  default:
+                    if (snapshot.hasError) {
+                      print("Error, Data not Found :" +
+                          snapshot.hasError.toString());
+                      return const Center(child: Text("Error, Data not Found"));
+                    } else {
+                      print("Data Founded");
+
+                      // if (snapshot.data!.data!.length != null) {
+                      //   print(snapshot.data);
+                      // }
+
+                      return ListView.builder(
+                        itemCount: snapshot.data!.data!.length,
+                        shrinkWrap: true,
+                        itemBuilder: (ctx, index) {
+                          print(snapshot);
+                          return Column(
+                            // pakai futurebuilder mulai dari sini
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) {
-                                        return FullDetailJobs();
-                                      },
-                                    ));
-                                  },
-                                  child: Text(
-                                    "Read more ...",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                              Container(
+                                margin: EdgeInsets.all(20),
+                                width: MediaQueryWidth * 8,
+                                height: BodyHeight * 0.25,
+                                decoration: BoxDecoration(
+                                  color:
+                                      Colors.blueGrey.shade100.withOpacity(0.6),
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
-                              )
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Text(
+                                          snapshot
+                                              .data!.data![index].productName
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              height: 1.5),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Text(
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          snapshot.data!.data![index].keterangan
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                              height: 1.5),
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 20),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Navigator.of(context)
+                                                    .push(MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return FullDetailJobs();
+                                                  },
+                                                ));
+                                              },
+                                              child: Text(
+                                                "Read more ...",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    ]),
+                              ),
                             ],
-                          )
-                        ]),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(20),
-                    width: MediaQueryWidth * 8,
-                    height: BodyHeight * 0.25,
-                    decoration: BoxDecoration(
-                      color: Colors.blueGrey.shade100.withOpacity(0.6),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              "Simple task(s) - Front-End Developer Animations (using Javascript/CSS/HTML)",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.5),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              "Hello, I'm looking for a developer with knowledge in Javascript, CSS and HTML. Additionaly, the developer should be familiar with",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  height: 1.5),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) {
-                                        return FullDetailJobs();
-                                      },
-                                    ));
-                                  },
-                                  child: Text(
-                                    "Read more ...",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              )
-                            ],
-                          )
-                        ]),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(20),
-                    width: MediaQueryWidth * 8,
-                    height: BodyHeight * 0.25,
-                    decoration: BoxDecoration(
-                      color: Colors.blueGrey.shade100.withOpacity(0.6),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              "Simple task(s) - Front-End Developer Animations (using Javascript/CSS/HTML)",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.5),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              "Hello, I'm looking for a developer with knowledge in Javascript, CSS and HTML. Additionaly, the developer should be familiar with",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  height: 1.5),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) {
-                                        return FullDetailJobs();
-                                      },
-                                    ));
-                                  },
-                                  child: Text(
-                                    "Read more ...",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              )
-                            ],
-                          )
-                        ]),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(20),
-                    width: MediaQueryWidth * 8,
-                    height: BodyHeight * 0.25,
-                    decoration: BoxDecoration(
-                      color: Colors.blueGrey.shade100.withOpacity(0.6),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              "Simple task(s) - Front-End Developer Animations (using Javascript/CSS/HTML)",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.5),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              "Hello, I'm looking for a developer with knowledge in Javascript, CSS and HTML. Additionaly, the developer should be familiar with",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  height: 1.5),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) {
-                                        return FullDetailJobs();
-                                      },
-                                    ));
-                                  },
-                                  child: Text(
-                                    "Read more ...",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              )
-                            ],
-                          )
-                        ]),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(20),
-                    width: MediaQueryWidth * 8,
-                    height: BodyHeight * 0.25,
-                    decoration: BoxDecoration(
-                      color: Colors.blueGrey.shade100.withOpacity(0.6),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              "Simple task(s) - Front-End Developer Animations (using Javascript/CSS/HTML)",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.5),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              "Hello, I'm looking for a developer with knowledge in Javascript, CSS and HTML. Additionaly, the developer should be familiar with",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  height: 1.5),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) {
-                                        return FullDetailJobs();
-                                      },
-                                    ));
-                                  },
-                                  child: Text(
-                                    "Read more ...",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              )
-                            ],
-                          )
-                        ]),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(20),
-                    width: MediaQueryWidth * 8,
-                    height: BodyHeight * 0.25,
-                    decoration: BoxDecoration(
-                      color: Colors.blueGrey.shade100.withOpacity(0.6),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              "Simple task(s) - Front-End Developer Animations (using Javascript/CSS/HTML)",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.5),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              "Hello, I'm looking for a developer with knowledge in Javascript, CSS and HTML. Additionaly, the developer should be familiar with",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  height: 1.5),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) {
-                                        return FullDetailJobs();
-                                      },
-                                    ));
-                                  },
-                                  child: Text(
-                                    "Read more ...",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              )
-                            ],
-                          )
-                        ]),
-                  )
-                ],
-              )
-            ],
-          ),
+                          );
+                        },
+                      );
+                      //
+                    }
+                }
+              }),
+
+          // Column(
+          //   // pakai futurebuilder mulai dari sini
+          //   children: [
+          //     Container(
+          //       margin: EdgeInsets.all(20),
+          //       width: MediaQueryWidth * 8,
+          //       height: BodyHeight * 0.25,
+          //       decoration: BoxDecoration(
+          //         color: Colors.blueGrey.shade100.withOpacity(0.6),
+          //         borderRadius: BorderRadius.circular(20),
+          //       ),
+          //       child: Column(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //           children: [
+          //             Padding(
+          //               padding: const EdgeInsets.all(10),
+          //               child: Text(
+          //                 "Simple task(s) - Front-End Developer Animations (using Javascript/CSS/HTML)",
+          //                 style: TextStyle(
+          //                     fontSize: 16,
+          //                     color: Colors.black,
+          //                     fontWeight: FontWeight.bold,
+          //                     height: 1.5),
+          //               ),
+          //             ),
+          //             Padding(
+          //               padding: const EdgeInsets.all(10),
+          //               child: Text(
+          //                 overflow: TextOverflow.ellipsis,
+          //                 maxLines: 2,
+          //                 "Hello, I'm looking for a developer with knowledge in Javascript, CSS and HTML. Additionaly, the developer should be familiar with",
+          //                 style: TextStyle(
+          //                     fontSize: 14,
+          //                     color: Colors.black,
+          //                     height: 1.5),
+          //               ),
+          //             ),
+          //             Row(
+          //               mainAxisAlignment: MainAxisAlignment.end,
+          //               children: [
+          //                 Padding(
+          //                   padding: const EdgeInsets.only(right: 20),
+          //                   child: GestureDetector(
+          //                     onTap: () {
+          //                       Navigator.of(context)
+          //                           .push(MaterialPageRoute(
+          //                         builder: (context) {
+          //                           return FullDetailJobs();
+          //                         },
+          //                       ));
+          //                     },
+          //                     child: Text(
+          //                       "Read more ...",
+          //                       style: TextStyle(
+          //                           color: Colors.black,
+          //                           fontSize: 12,
+          //                           fontWeight: FontWeight.bold),
+          //                     ),
+          //                   ),
+          //                 )
+          //               ],
+          //             )
+          //           ]),
+          //     ),
+          //   ],
+          // )
         ],
       ),
       ListView(

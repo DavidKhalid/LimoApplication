@@ -15,7 +15,7 @@ class _ProductCategoryAndroidState extends State<ProductCategoryAndroid> {
   @override
   void initState() {
     super.initState();
-    product = ModelProduct.getProductWD();
+    product = ModelProduct.getProductMD();
   }
 
   @override
