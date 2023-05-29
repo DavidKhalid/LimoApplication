@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:limoapplication/viewpages/user/homeuser.dart';
 import 'package:limoapplication/model/modeluser/modelloginuser.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart'; // package easyloading untuk popup
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+
+import '../model/session_manager.dart'; // package easyloading untuk popup
 
 class LoginPageUser extends StatefulWidget {
   @override
@@ -181,9 +183,16 @@ class _LoginPageUserState extends State<LoginPageUser> {
                                   password: PasswordController.text,
                                 ).then(
                                   (value) {
-                                    ModelLoginUser data = value;
+                                    ModelLoginUser modelLogin = value;
                                     print(value.status);
                                     if (value.status) {
+                                      Data? data = modelLogin.data as Data?;
+                                      SessionManager session = SessionManager();
+                                      session.setSession(
+                                        loggedIn: true,
+                                        id: data?.id.toString(),
+                                        username: data?.nama.toString(),
+                                      );
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) {

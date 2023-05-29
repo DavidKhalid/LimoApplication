@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:limoapplication/model/session_manager.dart';
 import 'package:limoapplication/viewpages/user/productCategoriUI.dart';
 import 'package:limoapplication/viewpages/user/productCategoriWeb.dart';
 import 'package:limoapplication/viewpages/user/productCategoryAndroid.dart';
@@ -11,7 +12,20 @@ class HomeUser extends StatefulWidget {
 }
 
 class _HomeUserState extends State<HomeUser> {
+  SessionManager sessionManager = SessionManager();
+  String nama = "";
   int number = 0;
+
+  @override
+  void initState() {
+    Future<String> getNama = sessionManager.getUsername();
+    getNama.then((value) {
+      setState(() {
+        nama = value;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +33,7 @@ class _HomeUserState extends State<HomeUser> {
     final mediaQueryWidth = MediaQuery.of(context).size.width;
     final myAppBar = AppBar(
       flexibleSpace: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFFFA7A35),
@@ -36,9 +50,9 @@ class _HomeUserState extends State<HomeUser> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                children: [
+                children: const [
                   Padding(
-                    padding: const EdgeInsets.only(left: 0),
+                    padding: EdgeInsets.only(left: 0),
                     child: Text(
                       "Welcome Back,",
                       style: TextStyle(
@@ -52,8 +66,8 @@ class _HomeUserState extends State<HomeUser> {
               Row(
                 children: [
                   Text(
-                    "David Khalid",
-                    style: TextStyle(
+                    nama,
+                    style: const TextStyle(
                         fontSize: 22,
                         color: Colors.black87,
                         fontWeight: FontWeight.bold),
@@ -62,7 +76,7 @@ class _HomeUserState extends State<HomeUser> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             width: 200,
           ),
           Column(
@@ -70,7 +84,7 @@ class _HomeUserState extends State<HomeUser> {
               Container(
                 width: 50,
                 height: 50,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
@@ -93,7 +107,7 @@ class _HomeUserState extends State<HomeUser> {
           Container(
             width: mediaQueryWidth,
             height: bodyHeight,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [Color(0xFFFA7A35), Color(0xFFFFFFFF)],
                 begin: Alignment.topCenter,
@@ -106,10 +120,10 @@ class _HomeUserState extends State<HomeUser> {
               Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 20, left: 20, right: 20),
+                    margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
                     height: bodyHeight * 0.1,
                     width: mediaQueryWidth * 0.9,
-                    child: Center(
+                    child: const Center(
                       child: TextField(
                         decoration: InputDecoration(
                           prefixIcon: Icon(
@@ -128,13 +142,13 @@ class _HomeUserState extends State<HomeUser> {
                         color: Colors.grey.shade300,
                         borderRadius: BorderRadius.circular(20)),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Row(
-                    children: [
+                    children: const [
                       Padding(
-                        padding: const EdgeInsets.only(left: 20),
+                        padding: EdgeInsets.only(left: 20),
                         child: Text(
                           "Category",
                           style: TextStyle(
@@ -145,11 +159,11 @@ class _HomeUserState extends State<HomeUser> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     height: 150,
                     width: mediaQueryWidth,
                     child: ListView(
@@ -169,7 +183,7 @@ class _HomeUserState extends State<HomeUser> {
                                 width: mediaQueryWidth * 0.7,
                                 height: 300,
                                 decoration: BoxDecoration(
-                                  image: DecorationImage(
+                                  image: const DecorationImage(
                                     fit: BoxFit.cover,
                                     image: AssetImage(
                                         "assets/images/ui_uxassets.png"),
@@ -179,7 +193,7 @@ class _HomeUserState extends State<HomeUser> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             GestureDetector(
@@ -194,7 +208,7 @@ class _HomeUserState extends State<HomeUser> {
                                 width: mediaQueryWidth * 0.7,
                                 height: 300,
                                 decoration: BoxDecoration(
-                                  image: DecorationImage(
+                                  image: const DecorationImage(
                                     fit: BoxFit.cover,
                                     image: AssetImage(
                                         "assets/images/webassets.png"),
@@ -204,7 +218,7 @@ class _HomeUserState extends State<HomeUser> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             GestureDetector(
@@ -219,7 +233,7 @@ class _HomeUserState extends State<HomeUser> {
                                 width: mediaQueryWidth * 0.7,
                                 height: 300,
                                 decoration: BoxDecoration(
-                                  image: DecorationImage(
+                                  image: const DecorationImage(
                                     fit: BoxFit.cover,
                                     image: AssetImage(
                                         "assets/images/mobileassets.png"),
@@ -229,7 +243,7 @@ class _HomeUserState extends State<HomeUser> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             GestureDetector(
@@ -244,7 +258,7 @@ class _HomeUserState extends State<HomeUser> {
                                 width: mediaQueryWidth * 0.7,
                                 height: 300,
                                 decoration: BoxDecoration(
-                                  image: DecorationImage(
+                                  image: const DecorationImage(
                                     fit: BoxFit.cover,
                                     image: AssetImage(
                                         "assets/images/hardware_softwareassets.png"),
@@ -259,7 +273,7 @@ class _HomeUserState extends State<HomeUser> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Container(
@@ -268,9 +282,9 @@ class _HomeUserState extends State<HomeUser> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 50, bottom: 10, left: 20),
+                        const Padding(
+                          padding:
+                              EdgeInsets.only(top: 50, bottom: 10, left: 20),
                           child: Text(
                             "Great result so far!",
                             style: TextStyle(
@@ -279,8 +293,8 @@ class _HomeUserState extends State<HomeUser> {
                                 color: Colors.white),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 0, left: 20),
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 0, left: 20),
                           child: Text(
                             "Do you want to see full history",
                             style: TextStyle(
@@ -289,8 +303,8 @@ class _HomeUserState extends State<HomeUser> {
                                 color: Colors.white),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 20),
                           child: Text(
                             "or send the message to this member?",
                             style: TextStyle(

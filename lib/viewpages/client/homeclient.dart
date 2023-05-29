@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:limoapplication/main.dart';
+import 'package:limoapplication/model/session_manager.dart';
 import 'package:limoapplication/viewpages/client/fullDetailJobs.dart';
 import 'package:limoapplication/viewpages/client/trackingProgressClient.dart';
 
@@ -11,7 +12,21 @@ class HomeClient extends StatefulWidget {
 }
 
 class _HomeClientState extends State<HomeClient> {
+  SessionManager sessionManager = SessionManager();
+  String nama = "";
   int number = 0;
+
+  @override
+  void initState() {
+    Future<String> getNama = sessionManager.getUsername();
+    getNama.then((value) {
+      setState(() {
+        nama = value;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final MediaQueryHeight = MediaQuery.of(context).size.height;
@@ -939,7 +954,7 @@ class _HomeClientState extends State<HomeClient> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Text("DavidK"),
+                        child: Text(nama),
                       ),
                     ],
                   ),

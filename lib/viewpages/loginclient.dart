@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:limoapplication/model/modelclient/modelloginclient.dart';
-import 'package:limoapplication/model/modeluser/modelloginuser.dart';
+// import 'package:limoapplication/model/modeluser/modelloginuser.dart';
+import 'package:limoapplication/model/session_manager.dart';
 import 'package:limoapplication/viewpages/client/homeclient.dart';
-import 'package:limoapplication/viewpages/user/homeuser.dart';
+// import 'package:limoapplication/viewpages/user/homeuser.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class LoginPageClient extends StatefulWidget {
@@ -179,9 +180,16 @@ class _LoginPageState extends State<LoginPageClient> {
                                 password: passwordController.text,
                               ).then(
                                 (value) {
-                                  ModelLoginClient data = value;
+                                  ModelLoginClient modelLogin = value;
                                   print(value.status);
                                   if (value.status) {
+                                    Data? data = modelLogin.data as Data?;
+                                    SessionManager session = SessionManager();
+                                    session.setSession(
+                                      loggedIn: true,
+                                      id: data?.id.toString(),
+                                      username: data?.username.toString(),
+                                    );
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) {

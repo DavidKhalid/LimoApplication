@@ -38,6 +38,8 @@ dependencies:
   flutter_local_notifications: ^13.0.0
   flutter_native_splash: ^2.2.18
   http: ^0.13.5
+  
+  shared_preferences: ^2.0.12
 
 flutter_native_splash:
   color: "FFFFFF"
