@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:limoapplication/model/modelclient/modelloginclient.dart';
-import 'package:limoapplication/model/modeluser/modelloginuser.dart';
+
+// import 'package:limoapplication/model/modeluser/modelloginuser.dart';
+import 'package:limoapplication/model/session_manager.dart';
 import 'package:limoapplication/viewpages/client/homeclient.dart';
-import 'package:limoapplication/viewpages/user/homeuser.dart';
+// import 'package:limoapplication/viewpages/user/homeuser.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class LoginPageClient extends StatefulWidget {
@@ -161,6 +163,8 @@ class _LoginPageState extends State<LoginPageClient> {
                         children: [
                           GestureDetector(
                             onTap: () {
+                              // ModelProduct.test(keyboard: "Limo");
+
                               if (usernameController.text.isEmpty) {
                                 // ini implementasi easyloading
                                 EasyLoading.showError(
@@ -179,9 +183,23 @@ class _LoginPageState extends State<LoginPageClient> {
                                 password: passwordController.text,
                               ).then(
                                 (value) {
-                                  ModelLoginClient data = value;
-                                  print(value.status);
+                                  ModelLoginClient modelLogin = value;
+                                  print(value.data);
                                   if (value.status) {
+                                    Data? data = modelLogin.data![0];
+                                    SessionManager session = SessionManager();
+                                    session.setSession(
+                                      loggedIn: true,
+                                      id: data?.id.toString(),
+                                      username: data?.username.toString(),
+                                      name: data?.name.toString(),
+                                      email: data?.email.toString(),
+                                      jeniskelamin:
+                                          data?.jenis_kelamin.toString(),
+                                      alamat: data?.alamat.toString(),
+                                      nik: data?.nik.toString(),
+                                      portofolio: data?.portofolio.toString(),
+                                    );
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) {
@@ -196,13 +214,6 @@ class _LoginPageState extends State<LoginPageClient> {
                                   // return null;
                                 },
                               );
-                              // Navigator.of(context).push(
-                              //   MaterialPageRoute(
-                              //     builder: (context) {
-                              //       return HomeClient();
-                              //     },
-                              //   ),
-                              // );
                             },
                             child: Container(
                               width: MediaQueryWidth * 0.5,

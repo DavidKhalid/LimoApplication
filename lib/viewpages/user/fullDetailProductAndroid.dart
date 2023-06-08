@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:limoapplication/viewpages/user/formNegoisasiAndroidUser.dart';
 
 class FullDetailProductAndroid extends StatefulWidget {
+  final String title;
+  final String username;
+  final String keterangan;
+
+  const FullDetailProductAndroid({
+    Key? key,
+    required this.title,
+    required this.username,
+    required this.keterangan,
+  }) : super(key: key);
+
   @override
   State<FullDetailProductAndroid> createState() =>
       _FullDetailProductAndroidState();
@@ -27,7 +39,7 @@ class _FullDetailProductAndroidState extends State<FullDetailProductAndroid> {
                   height: 20,
                 ),
                 Text(
-                  "UI/UX WEBSITE RUMAH SAKIT",
+                  widget.title,
                   style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,
@@ -37,7 +49,7 @@ class _FullDetailProductAndroidState extends State<FullDetailProductAndroid> {
                   height: 10,
                 ),
                 Text(
-                  "SUPARMAN",
+                  widget.username,
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.black,
@@ -63,7 +75,7 @@ class _FullDetailProductAndroidState extends State<FullDetailProductAndroid> {
                 Container(
                   // height: BodyHeight,
                   child: Text(
-                    "Contrary to popular belief, Lorem Ipsum is not simply random text.It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.Artikel ilmiah adalah laporan yang ditulis untuk memaparkan hasil penelitian, penyaduran, dan pemahaman yang dilakukan seseorang atau tim sesuai dengan kaidah dan etika keilmuan tertentu. Selain itu, artikel ilmiah merupakan salah satu bagian dari komunikasi dalam kehidupan akademik yang digunakan untuk jejaring penelitian di suatu tempat dengan tempat lain.Baca artikel detikbali, \"5 Contoh Artikel Ilmiah Singkat yang Benar untuk Tugas Kuliah\" selengkapnya https://www.detik.com/bali/berita/d-6558497/5-contoh-artikel-ilmiah-singkat-yan\g-benar-untuk-tugas-kuliah.Download Apps Detikcom Sekarang https://apps.detik.com/detik/. Contrary to popular belief, Lorem Ipsum is not simply random text.It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.Artikel ilmiah adalah laporan yang ditulis untuk memaparkan hasil penelitian, penyaduran, dan pemahaman yang dilakukan seseorang atau tim sesuai dengan kaidah dan etika keilmuan tertentu. Selain itu, artikel ilmiah merupakan salah satu bagian dari komunikasi dalam kehidupan akademik yang digunakan untuk jejaring penelitian di suatu tempat dengan tempat lain.Baca artikel detikbali, \"5 Contoh Artikel Ilmiah Singkat yang Benar untuk Tugas Kuliah\" selengkapnya https://www.detik.com/bali/berita/d-6558497/5-contoh-artikel-ilmiah-singkat-yan\g-benar-untuk-tugas-kuliah.Download Apps Detikcom Sekarang https://apps.detik.com/detik/. Contrary to popular belief, Lorem Ipsum is not simply random text.It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.Artikel ilmiah adalah laporan yang ditulis untuk memaparkan hasil penelitian, penyaduran, dan pemahaman yang dilakukan seseorang atau tim sesuai dengan kaidah dan etika keilmuan tertentu. Selain itu, artikel ilmiah merupakan salah satu bagian dari komunikasi dalam kehidupan akademik yang digunakan untuk jejaring penelitian di suatu tempat dengan tempat lain.Baca artikel detikbali, \"5 Contoh Artikel Ilmiah Singkat yang Benar untuk Tugas Kuliah\" selengkapnya https://www.detik.com/bali/berita/d-6558497/5-contoh-artikel-ilmiah-singkat-yan\g-benar-untuk-tugas-kuliah.Download Apps Detikcom Sekarang https://apps.detik.com/detik/. Contrary to popular belief, Lorem Ipsum is not simply random text.It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.Artikel ilmiah adalah laporan yang ditulis untuk memaparkan hasil penelitian, penyaduran",
+                    widget.keterangan,
                     style: TextStyle(fontSize: 16, height: 1.5),
                     textAlign: TextAlign.justify,
                   ),

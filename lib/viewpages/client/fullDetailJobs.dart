@@ -3,6 +3,16 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class FullDetailJobs extends StatefulWidget {
+  final String title;
+  final String price;
+  final String keterangan;
+
+  const FullDetailJobs({
+    Key? key,
+    required this.title,
+    required this.price,
+    required this.keterangan,
+  }) : super(key: key);
   @override
   State<FullDetailJobs> createState() => _FullDetailJobsState();
 }
@@ -25,7 +35,7 @@ class _FullDetailJobsState extends State<FullDetailJobs> {
                   height: 20,
                 ),
                 Text(
-                  "TITLE ORDERAN",
+                  widget.title,
                   style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,
@@ -45,7 +55,7 @@ class _FullDetailJobsState extends State<FullDetailJobs> {
                   height: 10,
                 ),
                 Text(
-                  "PRICE",
+                  widget.price,
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.black,
@@ -71,7 +81,7 @@ class _FullDetailJobsState extends State<FullDetailJobs> {
                 Container(
                   // height: BodyHeight,
                   child: Text(
-                    "Contrary to popular belief, Lorem Ipsum is not simply random text.It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.Artikel ilmiah adalah laporan yang ditulis untuk memaparkan hasil penelitian, penyaduran, dan pemahaman yang dilakukan seseorang atau tim sesuai dengan kaidah dan etika keilmuan tertentu. Selain itu, artikel ilmiah merupakan salah satu bagian dari komunikasi dalam kehidupan akademik yang digunakan untuk jejaring penelitian di suatu tempat dengan tempat lain.Baca artikel detikbali, \"5 Contoh Artikel Ilmiah Singkat yang Benar untuk Tugas Kuliah\" selengkapnya https://www.detik.com/bali/berita/d-6558497/5-contoh-artikel-ilmiah-singkat-yan\g-benar-untuk-tugas-kuliah.Download Apps Detikcom Sekarang https://apps.detik.com/detik/. Contrary to popular belief, Lorem Ipsum is not simply random text.It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.Artikel ilmiah adalah laporan yang ditulis untuk memaparkan hasil penelitian, penyaduran, dan pemahaman yang dilakukan seseorang atau tim sesuai dengan kaidah dan etika keilmuan tertentu. Selain itu, artikel ilmiah merupakan salah satu bagian dari komunikasi dalam kehidupan akademik yang digunakan untuk jejaring penelitian di suatu tempat dengan tempat lain.Baca artikel detikbali, \"5 Contoh Artikel Ilmiah Singkat yang Benar untuk Tugas Kuliah\" selengkapnya https://www.detik.com/bali/berita/d-6558497/5-contoh-artikel-ilmiah-singkat-yan\g-benar-untuk-tugas-kuliah.Download Apps Detikcom Sekarang https://apps.detik.com/detik/. Contrary to popular belief, Lorem Ipsum is not simply random text.It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.Artikel ilmiah adalah laporan yang ditulis untuk memaparkan hasil penelitian, penyaduran, dan pemahaman yang dilakukan seseorang atau tim sesuai dengan kaidah dan etika keilmuan tertentu. Selain itu, artikel ilmiah merupakan salah satu bagian dari komunikasi dalam kehidupan akademik yang digunakan untuk jejaring penelitian di suatu tempat dengan tempat lain.Baca artikel detikbali, \"5 Contoh Artikel Ilmiah Singkat yang Benar untuk Tugas Kuliah\" selengkapnya https://www.detik.com/bali/berita/d-6558497/5-contoh-artikel-ilmiah-singkat-yan\g-benar-untuk-tugas-kuliah.Download Apps Detikcom Sekarang https://apps.detik.com/detik/. Contrary to popular belief, Lorem Ipsum is not simply random text.It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.Artikel ilmiah adalah laporan yang ditulis untuk memaparkan hasil penelitian, penyaduran",
+                    widget.keterangan,
                     style: TextStyle(fontSize: 16, height: 1.5),
                     textAlign: TextAlign.justify,
                   ),

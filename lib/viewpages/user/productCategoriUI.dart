@@ -58,6 +58,7 @@ class _ProductCatergoryUIState extends State<ProductCatergoryUI> {
                             switch (snapshot.connectionState) {
                               case ConnectionState.waiting:
                                 print('Waiting...');
+                                print(snapshot.data);
                                 return const Center(
                                     child: CircularProgressIndicator());
                               default:
@@ -112,7 +113,23 @@ class _ProductCatergoryUIState extends State<ProductCatergoryUI> {
                                                           .push(
                                                               MaterialPageRoute(
                                                         builder: (context) {
-                                                          return FullDetailProductUI();
+                                                          return FullDetailProductUI(
+                                                            title: snapshot
+                                                                .data!
+                                                                .data![index]
+                                                                .productName
+                                                                .toString(),
+                                                            keterangan: snapshot
+                                                                .data!
+                                                                .data![index]
+                                                                .keterangan
+                                                                .toString(),
+                                                            username: snapshot
+                                                                .data!
+                                                                .data![index]
+                                                                .username
+                                                                .toString(),
+                                                          );
                                                         },
                                                       ));
                                                     },

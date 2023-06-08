@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:limoapplication/main.dart';
+import 'package:limoapplication/model/session_manager.dart';
 import 'package:limoapplication/viewpages/client/fullDetailJobs.dart';
 import 'package:limoapplication/viewpages/client/trackingProgressClient.dart';
 import 'package:limoapplication/model/modelproduct/modelproduct.dart';
@@ -12,6 +13,15 @@ class HomeClient extends StatefulWidget {
 }
 
 class _HomeClientState extends State<HomeClient> {
+  SessionManager sessionManager = SessionManager();
+  String username = "";
+  String nama = "";
+  String email = "";
+  String jenis_kelamin = "";
+  String nik = "";
+  String alamat = "";
+  String portofolio = "";
+
   int number = 0;
 
   late Future<ModelProduct> product;
@@ -19,7 +29,55 @@ class _HomeClientState extends State<HomeClient> {
   @override
   void initState() {
     super.initState();
-    product = ModelProduct.getProductByUsername();
+    Future<String> getUsername = sessionManager.getUsername();
+    getUsername.then((value) {
+      setState(() {
+        username = value;
+      });
+    });
+
+    Future<String> getNama = sessionManager.getNama();
+    getNama.then((value) {
+      setState(() {
+        nama = value;
+      });
+    });
+
+    Future<String> getEmail = sessionManager.getEmail();
+    getEmail.then((value) {
+      setState(() {
+        email = value;
+      });
+    });
+
+    Future<String> getJenis_kelamin = sessionManager.getJenis_Kelamin();
+    getJenis_kelamin.then((value) {
+      setState(() {
+        jenis_kelamin = value;
+      });
+    });
+
+    Future<String> getNik = sessionManager.getNik();
+    getNik.then((value) {
+      setState(() {
+        nik = value;
+      });
+    });
+
+    Future<String> getAlamat = sessionManager.getAlamat();
+    getAlamat.then((value) {
+      setState(() {
+        alamat = value;
+      });
+    });
+
+    Future<String> getPortofolio = sessionManager.getPortofolio();
+    getPortofolio.then((value) {
+      setState(() {
+        portofolio = value;
+      });
+    });
+    super.initState();
   }
 
   @override
@@ -86,9 +144,8 @@ class _HomeClientState extends State<HomeClient> {
               ),
             ),
           ),
-
           FutureBuilder<ModelProduct>(
-              future: product,
+              future: ModelProduct.getProductByUsername(mouse: username),
               builder: (context, snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
@@ -165,7 +222,21 @@ class _HomeClientState extends State<HomeClient> {
                                                 Navigator.of(context)
                                                     .push(MaterialPageRoute(
                                                   builder: (context) {
-                                                    return FullDetailJobs();
+                                                    return FullDetailJobs(
+                                                      title: snapshot
+                                                          .data!
+                                                          .data![index]
+                                                          .productName
+                                                          .toString(),
+                                                      price: snapshot.data!
+                                                          .data![index].price
+                                                          .toString(),
+                                                      keterangan: snapshot
+                                                          .data!
+                                                          .data![index]
+                                                          .keterangan
+                                                          .toString(),
+                                                    );
                                                   },
                                                 ));
                                               },
@@ -191,73 +262,6 @@ class _HomeClientState extends State<HomeClient> {
                     }
                 }
               }),
-
-          // Column(
-          //   // pakai futurebuilder mulai dari sini
-          //   children: [
-          //     Container(
-          //       margin: EdgeInsets.all(20),
-          //       width: MediaQueryWidth * 8,
-          //       height: BodyHeight * 0.25,
-          //       decoration: BoxDecoration(
-          //         color: Colors.blueGrey.shade100.withOpacity(0.6),
-          //         borderRadius: BorderRadius.circular(20),
-          //       ),
-          //       child: Column(
-          //           crossAxisAlignment: CrossAxisAlignment.start,
-          //           children: [
-          //             Padding(
-          //               padding: const EdgeInsets.all(10),
-          //               child: Text(
-          //                 "Simple task(s) - Front-End Developer Animations (using Javascript/CSS/HTML)",
-          //                 style: TextStyle(
-          //                     fontSize: 16,
-          //                     color: Colors.black,
-          //                     fontWeight: FontWeight.bold,
-          //                     height: 1.5),
-          //               ),
-          //             ),
-          //             Padding(
-          //               padding: const EdgeInsets.all(10),
-          //               child: Text(
-          //                 overflow: TextOverflow.ellipsis,
-          //                 maxLines: 2,
-          //                 "Hello, I'm looking for a developer with knowledge in Javascript, CSS and HTML. Additionaly, the developer should be familiar with",
-          //                 style: TextStyle(
-          //                     fontSize: 14,
-          //                     color: Colors.black,
-          //                     height: 1.5),
-          //               ),
-          //             ),
-          //             Row(
-          //               mainAxisAlignment: MainAxisAlignment.end,
-          //               children: [
-          //                 Padding(
-          //                   padding: const EdgeInsets.only(right: 20),
-          //                   child: GestureDetector(
-          //                     onTap: () {
-          //                       Navigator.of(context)
-          //                           .push(MaterialPageRoute(
-          //                         builder: (context) {
-          //                           return FullDetailJobs();
-          //                         },
-          //                       ));
-          //                     },
-          //                     child: Text(
-          //                       "Read more ...",
-          //                       style: TextStyle(
-          //                           color: Colors.black,
-          //                           fontSize: 12,
-          //                           fontWeight: FontWeight.bold),
-          //                     ),
-          //                   ),
-          //                 )
-          //               ],
-          //             )
-          //           ]),
-          //     ),
-          //   ],
-          // )
         ],
       ),
       ListView(
@@ -659,7 +663,7 @@ class _HomeClientState extends State<HomeClient> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Text("David Khalid"),
+                        child: Text(nama),
                       ),
                     ],
                   ),
@@ -672,7 +676,7 @@ class _HomeClientState extends State<HomeClient> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Text("khaliddavid952@gmail.com"),
+                        child: Text(email),
                       ),
                     ],
                   ),
@@ -685,7 +689,7 @@ class _HomeClientState extends State<HomeClient> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Text("Laki-laki"),
+                        child: Text(jenis_kelamin),
                       ),
                     ],
                   ),
@@ -698,7 +702,7 @@ class _HomeClientState extends State<HomeClient> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Text("123456789"),
+                        child: Text(nik),
                       ),
                     ],
                   ),
@@ -711,7 +715,7 @@ class _HomeClientState extends State<HomeClient> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Text("Karang Rejo, Bireuen"),
+                        child: Text(alamat),
                       ),
                     ],
                   ),
@@ -724,7 +728,7 @@ class _HomeClientState extends State<HomeClient> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Text("www.davidmyprofile.com"),
+                        child: Text(portofolio),
                       ),
                     ],
                   ),
@@ -747,20 +751,7 @@ class _HomeClientState extends State<HomeClient> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Text("DavidK"),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("Password"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("1234567"),
+                        child: Text(username),
                       ),
                     ],
                   ),
@@ -768,6 +759,30 @@ class _HomeClientState extends State<HomeClient> {
               ),
             ],
           ),
+          Positioned(
+            left: 140,
+            bottom: 7,
+            child: GestureDetector(
+              onTap: () {},
+              child: Container(
+                width: MediaQueryWidth * 0.3,
+                height: BodyHeight * 0.06,
+                decoration: BoxDecoration(
+                  color: Color(0xFFFFFFFF),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                  child: Text(
+                    "Logout",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Color(0xFFFA7A35),
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
+          )
         ],
       )
     ];

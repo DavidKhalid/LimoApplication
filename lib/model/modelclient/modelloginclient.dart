@@ -6,17 +6,35 @@ class Data {
   String? id;
   String? username;
   String? created_by;
+  String? name;
+  String? email;
+  String? jenis_kelamin;
+  String? nik;
+  String? alamat;
+  String? portofolio;
 
   Data({
     this.id,
     this.username,
     this.created_by,
+    this.name,
+    this.alamat,
+    this.email,
+    this.jenis_kelamin,
+    this.nik,
+    this.portofolio,
   });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
-    username = json['nama'];
-    created_by = json['email'];
+    username = json['username'];
+    created_by = json['created_by'];
+    email = json["email"];
+    name = json["nama"];
+    alamat = json["alamat"];
+    jenis_kelamin = json["jenis_kelamin"];
+    nik = json["nik"];
+    portofolio = json["portofolio"];
   }
 }
 

@@ -114,7 +114,23 @@ class _ProductCategoryWebState extends State<ProductCategoryWeb> {
                                                           .push(
                                                               MaterialPageRoute(
                                                         builder: (context) {
-                                                          return FullDetailProductWeb();
+                                                          return FullDetailProductWeb(
+                                                            title: snapshot
+                                                                .data!
+                                                                .data![index]
+                                                                .productName
+                                                                .toString(),
+                                                            username: snapshot
+                                                                .data!
+                                                                .data![index]
+                                                                .username
+                                                                .toString(),
+                                                            keterangan: snapshot
+                                                                .data!
+                                                                .data![index]
+                                                                .keterangan
+                                                                .toString(),
+                                                          );
                                                         },
                                                       ));
                                                     },

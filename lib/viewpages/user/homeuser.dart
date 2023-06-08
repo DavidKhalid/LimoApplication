@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:limoapplication/model/modelnego.,dart/modelnego.dart';
+import 'package:limoapplication/model/session_managerUser.dart';
+import 'package:limoapplication/model/session_manager.dart';
 import 'package:limoapplication/viewpages/user/productCategoriUI.dart';
 import 'package:limoapplication/viewpages/user/productCategoriWeb.dart';
 import 'package:limoapplication/viewpages/user/productCategoryAndroid.dart';
-import 'package:limoapplication/viewpages/user/productCategoryHardAndSoft.dart';
 import 'package:limoapplication/viewpages/user/trackingprogressuser.dart';
+import 'package:limoapplication/model/modelproduct/modelproduct.dart';
+
+import 'package:limoapplication/model/session_managerUser.dart';
 
 class HomeUser extends StatefulWidget {
   @override
@@ -11,7 +16,36 @@ class HomeUser extends StatefulWidget {
 }
 
 class _HomeUserState extends State<HomeUser> {
+  SessionManager sessionManager = SessionManager();
+  String username = "";
+
   int number = 0;
+
+  late Future<ModelProduct> product;
+  late Future<ModelNego> nego;
+
+  @override
+  void initState() {
+    super.initState();
+    product = ModelProduct.getSingleDataByUsername();
+    Future<String> getUsername = sessionManager.getUsername();
+    getUsername.then((value) {
+      setState(() {
+        username = value;
+      });
+    });
+
+    nego = ModelNego.getDataNegoUser();
+
+    // Future<String> getUsernameUser = sessionManager.getUsernameUser();
+    // getUsernameUser.then((value) {
+    //   setState(() {
+    //     getUsernameUser = value as Future<String>;
+    //   });
+    // });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +53,7 @@ class _HomeUserState extends State<HomeUser> {
     final mediaQueryWidth = MediaQuery.of(context).size.width;
     final myAppBar = AppBar(
       flexibleSpace: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFFFA7A35),
@@ -36,9 +70,9 @@ class _HomeUserState extends State<HomeUser> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                children: [
+                children: const [
                   Padding(
-                    padding: const EdgeInsets.only(left: 0),
+                    padding: EdgeInsets.only(left: 0),
                     child: Text(
                       "Welcome Back,",
                       style: TextStyle(
@@ -52,8 +86,8 @@ class _HomeUserState extends State<HomeUser> {
               Row(
                 children: [
                   Text(
-                    "David Khalid",
-                    style: TextStyle(
+                    username,
+                    style: const TextStyle(
                         fontSize: 22,
                         color: Colors.black87,
                         fontWeight: FontWeight.bold),
@@ -62,7 +96,7 @@ class _HomeUserState extends State<HomeUser> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             width: 200,
           ),
           Column(
@@ -70,7 +104,7 @@ class _HomeUserState extends State<HomeUser> {
               Container(
                 width: 50,
                 height: 50,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
@@ -93,7 +127,7 @@ class _HomeUserState extends State<HomeUser> {
           Container(
             width: mediaQueryWidth,
             height: bodyHeight,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [Color(0xFFFA7A35), Color(0xFFFFFFFF)],
                 begin: Alignment.topCenter,
@@ -106,10 +140,10 @@ class _HomeUserState extends State<HomeUser> {
               Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 20, left: 20, right: 20),
+                    margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
                     height: bodyHeight * 0.1,
                     width: mediaQueryWidth * 0.9,
-                    child: Center(
+                    child: const Center(
                       child: TextField(
                         decoration: InputDecoration(
                           prefixIcon: Icon(
@@ -128,13 +162,13 @@ class _HomeUserState extends State<HomeUser> {
                         color: Colors.grey.shade300,
                         borderRadius: BorderRadius.circular(20)),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Row(
-                    children: [
+                    children: const [
                       Padding(
-                        padding: const EdgeInsets.only(left: 20),
+                        padding: EdgeInsets.only(left: 20),
                         child: Text(
                           "Category",
                           style: TextStyle(
@@ -145,11 +179,11 @@ class _HomeUserState extends State<HomeUser> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     height: 150,
                     width: mediaQueryWidth,
                     child: ListView(
@@ -169,7 +203,7 @@ class _HomeUserState extends State<HomeUser> {
                                 width: mediaQueryWidth * 0.7,
                                 height: 300,
                                 decoration: BoxDecoration(
-                                  image: DecorationImage(
+                                  image: const DecorationImage(
                                     fit: BoxFit.cover,
                                     image: AssetImage(
                                         "assets/images/ui_uxassets.png"),
@@ -179,7 +213,7 @@ class _HomeUserState extends State<HomeUser> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             GestureDetector(
@@ -194,7 +228,7 @@ class _HomeUserState extends State<HomeUser> {
                                 width: mediaQueryWidth * 0.7,
                                 height: 300,
                                 decoration: BoxDecoration(
-                                  image: DecorationImage(
+                                  image: const DecorationImage(
                                     fit: BoxFit.cover,
                                     image: AssetImage(
                                         "assets/images/webassets.png"),
@@ -204,7 +238,7 @@ class _HomeUserState extends State<HomeUser> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             GestureDetector(
@@ -219,7 +253,7 @@ class _HomeUserState extends State<HomeUser> {
                                 width: mediaQueryWidth * 0.7,
                                 height: 300,
                                 decoration: BoxDecoration(
-                                  image: DecorationImage(
+                                  image: const DecorationImage(
                                     fit: BoxFit.cover,
                                     image: AssetImage(
                                         "assets/images/mobileassets.png"),
@@ -229,37 +263,15 @@ class _HomeUserState extends State<HomeUser> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) {
-                                    return ProductCategoryHardwareAndSoftware();
-                                  },
-                                ));
-                              },
-                              child: Container(
-                                width: mediaQueryWidth * 0.7,
-                                height: 300,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: AssetImage(
-                                        "assets/images/hardware_softwareassets.png"),
-                                  ),
-                                  color: Colors.green.shade500,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                              ),
                             ),
                           ],
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Container(
@@ -268,9 +280,9 @@ class _HomeUserState extends State<HomeUser> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 50, bottom: 10, left: 20),
+                        const Padding(
+                          padding:
+                              EdgeInsets.only(top: 50, bottom: 10, left: 20),
                           child: Text(
                             "Great result so far!",
                             style: TextStyle(
@@ -279,8 +291,8 @@ class _HomeUserState extends State<HomeUser> {
                                 color: Colors.white),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 0, left: 20),
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 0, left: 20),
                           child: Text(
                             "Do you want to see full history",
                             style: TextStyle(
@@ -289,8 +301,8 @@ class _HomeUserState extends State<HomeUser> {
                                 color: Colors.white),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 20),
                           child: Text(
                             "or send the message to this member?",
                             style: TextStyle(
@@ -312,374 +324,106 @@ class _HomeUserState extends State<HomeUser> {
           )
         ],
       ),
-      ListView(
-        children: [
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: Text(
-                      "Crontract",
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ],
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) {
-                      return TrackingProgressUser();
-                    },
-                  ));
-                },
-                child: Container(
-                  margin: EdgeInsets.all(20),
-                  // color: Colors.grey.shade300,
-                  width: mediaQueryWidth,
-                  height: bodyHeight * 0.27,
-                  child: Row(children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Text(
-                        "10.00",
-                        style: TextStyle(
-                            fontSize: 15,
+      FutureBuilder<ModelNego>(
+          future: nego,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                print('Waiting...');
+                return const Center(child: CircularProgressIndicator());
+              default:
+                if (snapshot.hasError) {
+                  print(
+                      "Error, Data not Found :" + snapshot.hasError.toString());
+                  return const Center(child: Text("Error, Data not Found"));
+                } else {
+                  print("Data Founded");
+
+                  return ListView.builder(
+                    itemCount: snapshot.data!.data!.length,
+                    shrinkWrap: true,
+                    itemBuilder: (ctx, index) {
+                      print(snapshot);
+                      return Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) {
+                                  return TrackingProgressUser();
+                                },
+                              ));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.all(20),
+                              // color: Colors.grey.shade300,
+                              width: mediaQueryWidth,
+                              height: bodyHeight * 0.27,
+                              child: Row(children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Text(
+                                    "10.00",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                                Container(
+                                  width: mediaQueryWidth * 0.75,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFFA7A35).withOpacity(0.9),
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: Column(children: [
+                                    ListTile(
+                                      title: Padding(
+                                        padding: const EdgeInsets.only(top: 35),
+                                        child: Text(
+                                          snapshot
+                                              .data!.data![index].productName
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      subtitle: Padding(
+                                        padding: const EdgeInsets.only(top: 15),
+                                        child: Text(
+                                          snapshot
+                                              .data!.data![index].description
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                                )
+                              ]),
+                            ),
+                          ),
+                          Divider(
+                            indent: 20,
+                            endIndent: 20,
                             color: Colors.black,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    Container(
-                      width: mediaQueryWidth * 0.75,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFA7A35).withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Column(children: [
-                        ListTile(
-                          title: Padding(
-                            padding: const EdgeInsets.only(top: 35),
-                            child: Text(
-                              "Mobile App Prototype",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                            thickness: 3,
+                            height: 5,
                           ),
-                          subtitle: Padding(
-                            padding: const EdgeInsets.only(top: 15),
-                            child: Text(
-                              "make mobile app",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                          ),
-                        ),
-                      ]),
-                    )
-                  ]),
-                ),
-              ),
-              Divider(
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black,
-                thickness: 3,
-                height: 5,
-              ),
-              Container(
-                margin: EdgeInsets.all(20),
-                // color: Colors.grey.shade300,
-                width: mediaQueryWidth,
-                height: bodyHeight * 0.27,
-                child: Row(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Text(
-                      "10.00",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Container(
-                    width: mediaQueryWidth * 0.75,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFA7A35).withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(children: [
-                      ListTile(
-                        title: Padding(
-                          padding: const EdgeInsets.only(top: 35),
-                          child: Text(
-                            "Mobile App Prototype",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Text(
-                            "make mobile app",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                    ]),
-                  ),
-                ]),
-              ),
-              Divider(
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black,
-                thickness: 3,
-                height: 5,
-              ),
-              Container(
-                margin: EdgeInsets.all(20),
-                // color: Colors.grey.shade300,
-                width: mediaQueryWidth,
-                height: bodyHeight * 0.27,
-                child: Row(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Text(
-                      "10.00",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Container(
-                    width: mediaQueryWidth * 0.75,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFA7A35).withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(children: [
-                      ListTile(
-                        title: Padding(
-                          padding: const EdgeInsets.only(top: 35),
-                          child: Text(
-                            "Mobile App Prototype",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Text(
-                            "make mobile app",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                    ]),
-                  ),
-                ]),
-              ),
-              Divider(
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black,
-                thickness: 3,
-                height: 5,
-              ),
-              Container(
-                margin: EdgeInsets.all(20),
-                // color: Colors.grey.shade300,
-                width: mediaQueryWidth,
-                height: bodyHeight * 0.27,
-                child: Row(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Text(
-                      "10.00",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Container(
-                    width: mediaQueryWidth * 0.75,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFA7A35).withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(children: [
-                      ListTile(
-                        title: Padding(
-                          padding: const EdgeInsets.only(top: 35),
-                          child: Text(
-                            "Mobile App Prototype",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Text(
-                            "make mobile app",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                    ]),
-                  ),
-                ]),
-              ),
-              Divider(
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black,
-                thickness: 3,
-                height: 5,
-              ),
-              Container(
-                margin: EdgeInsets.all(20),
-                // color: Colors.grey.shade300,
-                width: mediaQueryWidth,
-                height: bodyHeight * 0.27,
-                child: Row(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Text(
-                      "10.00",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Container(
-                    width: mediaQueryWidth * 0.75,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFA7A35).withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(children: [
-                      ListTile(
-                        title: Padding(
-                          padding: const EdgeInsets.only(top: 35),
-                          child: Text(
-                            "Mobile App Prototype",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Text(
-                            "make mobile app",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                    ]),
-                  ),
-                ]),
-              ),
-              Divider(
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black,
-                thickness: 3,
-                height: 5,
-              ),
-              Container(
-                margin: EdgeInsets.all(20),
-                // color: Colors.grey.shade300,
-                width: mediaQueryWidth,
-                height: bodyHeight * 0.27,
-                child: Row(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Text(
-                      "10.00",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Container(
-                    width: mediaQueryWidth * 0.75,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFA7A35).withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(children: [
-                      ListTile(
-                        title: Padding(
-                          padding: const EdgeInsets.only(top: 35),
-                          child: Text(
-                            "Mobile App Prototype",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Text(
-                            "make mobile app",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                    ]),
-                  ),
-                ]),
-              ),
-              Divider(
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black,
-                thickness: 3,
-                height: 5,
-              ),
-            ],
-          ),
-        ],
-      ),
+                        ],
+                      );
+                    },
+                  );
+                  //
+                }
+            }
+          }),
       Stack(
         children: [
           Image(
@@ -724,7 +468,7 @@ class _HomeUserState extends State<HomeUser> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Text("khaliddavid952@gmail.com"),
+                        child: Text("david@gmail.com"),
                       ),
                     ],
                   ),
@@ -750,7 +494,7 @@ class _HomeUserState extends State<HomeUser> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Text("123456789"),
+                        child: Text("0987612345"),
                       ),
                     ],
                   ),
@@ -763,7 +507,7 @@ class _HomeUserState extends State<HomeUser> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Text("Karang Rejo, Bireuen"),
+                        child: Text("Karang Rejo"),
                       ),
                     ],
                   ),
@@ -776,7 +520,7 @@ class _HomeUserState extends State<HomeUser> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Text("www.davidmyprofile.com"),
+                        child: Text("davidporto@gmail.com"),
                       ),
                     ],
                   ),
@@ -799,20 +543,7 @@ class _HomeUserState extends State<HomeUser> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(20),
-                        child: Text("DavidK"),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("Password"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("1234567"),
+                        child: Text(username),
                       ),
                     ],
                   ),
@@ -820,6 +551,27 @@ class _HomeUserState extends State<HomeUser> {
               ),
             ],
           ),
+          Positioned(
+            left: 140,
+            bottom: 7,
+            child: Container(
+              width: mediaQueryWidth * 0.3,
+              height: bodyHeight * 0.06,
+              decoration: BoxDecoration(
+                color: Color(0xFFFFFFFF),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Text(
+                  "Logout",
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Color(0xFFFA7A35),
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          )
         ],
       ),
     ];

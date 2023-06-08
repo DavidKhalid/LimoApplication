@@ -134,7 +134,7 @@ class ModelProduct {
     }
   }
 
-  static Future<ModelProduct> getProductByUsername(
+  static Future<ModelProduct> getProductByUsername({required String mouse}
       // this is GET Product By Username
 
       // required String kategori,
@@ -145,7 +145,8 @@ class ModelProduct {
 
     // print("password yang diterima : " + jeniskelamin.toString());
     var endpoint =
-        Uri.parse("https://bohlimo.com/productByUsername?username=halojames");
+        Uri.parse("https://bohlimo.com/productByUsername?username=${mouse}");
+    print(endpoint);
 
     var apiResult = await myhttp.get(endpoint);
     //
@@ -159,6 +160,42 @@ class ModelProduct {
     } catch (e) {
       print(e);
       return ModelProduct(status: false, msg: "Get Product By Username Gagal");
+    }
+  }
+
+  static Future<ModelProduct> test({required String keyboard}) async {
+    var result =
+        Uri.parse("https://bohlimo.com/productByUsername?username=${keyboard}");
+    print(result);
+
+    return ModelProduct(status: true);
+  }
+
+  static Future<ModelProduct> getSingleDataByUsername(
+      // this is GET Product By Username
+
+      // required String kategori,
+
+      // required String sebagai
+      ) async {
+    // print("password yang diterima : " + kategori.toString());
+
+    // print("password yang diterima : " + jeniskelamin.toString());
+    var endpoint = Uri.parse("https://bohlimo.com/user?username=parman");
+
+    var apiResult = await myhttp.get(endpoint);
+    //
+
+    try {
+      var jsonObject = json.decode(apiResult.body);
+      print("jsonObject");
+      print(jsonObject);
+
+      return ModelProduct.fromJson(jsonObject);
+    } catch (e) {
+      print(e);
+      return ModelProduct(
+          status: false, msg: "Get Single Data By Username Gagal");
     }
   }
 

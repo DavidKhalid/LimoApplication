@@ -7,18 +7,21 @@ class Data {
   String? nama;
   String? email;
   String? role;
+  String? username;
 
   Data({
     this.id,
     this.nama,
     this.email,
     this.role,
+    this.username,
   });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     nama = json['nama'];
     email = json['email'];
+    username = json["username"];
   }
 }
 
