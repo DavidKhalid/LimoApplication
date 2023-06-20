@@ -198,7 +198,7 @@ class _LoginPageUserState extends State<LoginPageUser> {
                                         nik: "",
                                         portofolio: "",
                                       );
-                                      Navigator.of(context).push(
+                                      Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                           builder: (context) {
                                             return HomeUser();

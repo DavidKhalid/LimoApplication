@@ -98,38 +98,6 @@ class _FullDetailJobsState extends State<FullDetailJobs> {
                   height: 65,
                   color: Colors.white,
                 )),
-            Positioned(
-              left: mediaQueryWidth / 4,
-              bottom: 0,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: Container(
-                  width: mediaQueryWidth * 0.5,
-                  height: mediaQueryHeight * 0.06,
-                  child: Center(
-                    child: Text(
-                      "APPLY NOW",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color(0xFFFA7A35).withOpacity(0.2),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: Offset(0, 3))
-                      ],
-                      color: Color(0xFFFA7A35),
-                      borderRadius: BorderRadius.circular(20)),
-                ),
-              ),
-            ),
           ],
         ),
       ),

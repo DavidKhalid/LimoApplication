@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:limoapplication/model/modelnego.,dart/modelnego.dart';
+import 'package:limoapplication/model/modeltransaksi/modeltransaksi.dart';
 import 'package:limoapplication/model/session_managerUser.dart';
 import 'package:limoapplication/model/session_manager.dart';
+import 'package:limoapplication/viewpages/loginuser.dart';
 import 'package:limoapplication/viewpages/user/productCategoriUI.dart';
 import 'package:limoapplication/viewpages/user/productCategoriWeb.dart';
 import 'package:limoapplication/viewpages/user/productCategoryAndroid.dart';
@@ -283,34 +285,28 @@ class _HomeUserState extends State<HomeUser> {
                         const Padding(
                           padding:
                               EdgeInsets.only(top: 50, bottom: 10, left: 20),
-                          child: Text(
-                            "Great result so far!",
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                          child: Center(
+                            child: Text(
+                              "ALL THE PROBLEM YOU HAVE",
+                              style: TextStyle(
+                                  fontSize: 23,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
                           ),
                         ),
                         const Padding(
                           padding: EdgeInsets.only(bottom: 0, left: 20),
-                          child: Text(
-                            "Do you want to see full history",
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                          child: Center(
+                            child: Text(
+                              "LIMO IS THE SOLUTION",
+                              style: TextStyle(
+                                  fontSize: 23,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 20),
-                          child: Text(
-                            "or send the message to this member?",
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                        )
                       ],
                     ),
                     decoration: BoxDecoration(
@@ -343,70 +339,111 @@ class _HomeUserState extends State<HomeUser> {
                     itemCount: snapshot.data!.data!.length,
                     shrinkWrap: true,
                     itemBuilder: (ctx, index) {
-                      print(snapshot);
+                      print(snapshot.data!.data![index]);
                       return Column(
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) {
-                                  return TrackingProgressUser();
-                                },
-                              ));
+                              print(snapshot.data!.data![index].id.toString());
+                              if (snapshot.data!.data![index].status
+                                      .toString() ==
+                                  "pending") {
+                                print("nego sedang pending"); // hapus baris ini
+                                return null; // hapus baris ini
+                                // bikin satu halaman lagi untuk pending
+                                // bikin satu navigator lagi yang kalau di click akan menuju ke halaman tolak
+                                // untuk menampilkan status di tolak
+                              }
+                              ModelTransaksi.trackingstatus(
+                                      id_nego: snapshot.data!.data![index].id
+                                          .toString())
+                                  .then((value) {
+                                if (value.data!.isEmpty) {
+                                  print(
+                                      "transaksi di nego ini ditolak"); // hapus baris ini
+                                  return null; // hapus baris ini
+                                  // bikin satu halaman lagi untuk tolak
+                                  // bikin satu navigator lagi yang kalau di click akan menuju ke halaman tolak
+                                  // untuk menampilkan status di tolak
+                                }
+                                ;
+                                print("value");
+                                print(value.data![0].id_transksi);
+                                print(value.data![0].status);
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) {
+                                    return TrackingProgressUser(
+                                      id_nego:
+                                          value.data![0].id_transksi.toString(),
+                                      id_status:
+                                          value.data![0].status.toString(),
+                                    );
+                                  },
+                                ));
+                              });
                             },
                             child: Container(
                               margin: EdgeInsets.all(20),
                               // color: Colors.grey.shade300,
                               width: mediaQueryWidth,
                               height: bodyHeight * 0.27,
-                              child: Row(children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, right: 10),
-                                  child: Text(
-                                    "10.00",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                                Container(
-                                  width: mediaQueryWidth * 0.75,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFFA7A35).withOpacity(0.9),
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  child: Column(children: [
-                                    ListTile(
-                                      title: Padding(
-                                        padding: const EdgeInsets.only(top: 35),
-                                        child: Text(
-                                          snapshot
-                                              .data!.data![index].productName
-                                              .toString(),
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: mediaQueryWidth * 0.75,
+                                      decoration: BoxDecoration(
+                                        color:
+                                            Color(0xFFFA7A35).withOpacity(0.9),
+                                        borderRadius: BorderRadius.circular(30),
                                       ),
-                                      subtitle: Padding(
-                                        padding: const EdgeInsets.only(top: 15),
-                                        child: Text(
-                                          snapshot
-                                              .data!.data![index].description
-                                              .toString(),
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w400),
+                                      child: Column(children: [
+                                        ListTile(
+                                          title: Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 35),
+                                            child: Text(
+                                              snapshot.data!.data![index]
+                                                  .productName
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          subtitle: Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 15),
+                                            child: Text(
+                                              snapshot.data!.data![index]
+                                                  .description
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                          ),
+                                          trailing: (snapshot
+                                                      .data!.data![index].status
+                                                      .toString() ==
+                                                  "ditolak")
+                                              ? Icon(Icons.close,
+                                                  color: Colors.red)
+                                              : (snapshot.data!.data![index]
+                                                          .status
+                                                          .toString() ==
+                                                      "diterima")
+                                                  ? Icon(Icons.check,
+                                                      color: Colors.green)
+                                                  : Icon(
+                                                      Icons.watch_later_sharp,
+                                                      color: Colors.white),
                                         ),
-                                      ),
-                                    ),
+                                      ]),
+                                    )
                                   ]),
-                                )
-                              ]),
                             ),
                           ),
                           Divider(
@@ -554,20 +591,30 @@ class _HomeUserState extends State<HomeUser> {
           Positioned(
             left: 140,
             bottom: 7,
-            child: Container(
-              width: mediaQueryWidth * 0.3,
-              height: bodyHeight * 0.06,
-              decoration: BoxDecoration(
-                color: Color(0xFFFFFFFF),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Center(
-                child: Text(
-                  "Logout",
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xFFFA7A35),
-                      fontWeight: FontWeight.bold),
+            child: GestureDetector(
+              onTap: () {
+                sessionManager.logout();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) {
+                    return LoginPageUser();
+                  },
+                ));
+              },
+              child: Container(
+                width: mediaQueryWidth * 0.3,
+                height: bodyHeight * 0.06,
+                decoration: BoxDecoration(
+                  color: Color(0xFFFFFFFF),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                  child: Text(
+                    "Logout",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Color(0xFFFA7A35),
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),

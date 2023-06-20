@@ -142,7 +142,7 @@ class ModelNego {
 
     // print("password yang diterima : " + jeniskelamin.toString());
     var endpoint =
-        Uri.parse("https://bohlimo.com/nego?username=parman&id_product=2");
+        Uri.parse("https://bohlimo.com/nego?username=parman&id_product=3");
     var apiResult = await myhttp.post(endpoint, body: {
       "price": price,
       "deadline": deadline,
@@ -163,6 +163,7 @@ class ModelNego {
   }
 
   static Future<ModelNego> endNegoDiterima({
+    required String id_nego,
     required String status,
   }
       // required String sebagai
@@ -170,7 +171,7 @@ class ModelNego {
     // print("password yang diterima : " + kategori.toString());
 
     // print("password yang diterima : " + jeniskelamin.toString());
-    var endpoint = Uri.parse("https://bohlimo.com/nego/end?id_nego=2");
+    var endpoint = Uri.parse("https://bohlimo.com/nego/end?id_nego=$id_nego");
     var apiResult = await myhttp.post(endpoint, body: {"status": status});
     //
 
@@ -188,13 +189,14 @@ class ModelNego {
 
   static Future<ModelNego> endNegoDitolak({
     required String status,
+    required String id_nego,
   }
       // required String sebagai
       ) async {
     // print("password yang diterima : " + kategori.toString());
 
     // print("password yang diterima : " + jeniskelamin.toString());
-    var endpoint = Uri.parse("https://bohlimo.com/nego/end?id_nego=2");
+    var endpoint = Uri.parse("https://bohlimo.com/nego/end?id_nego=$id_nego");
     var apiResult = await myhttp.post(endpoint, body: {"status": status});
     //
 

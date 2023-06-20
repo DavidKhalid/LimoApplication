@@ -134,7 +134,7 @@ class ModelProduct {
     }
   }
 
-  static Future<ModelProduct> getProductByUsername({required String mouse}
+  static Future<ModelProduct> getProductByUsername(
       // this is GET Product By Username
 
       // required String kategori,
@@ -145,7 +145,7 @@ class ModelProduct {
 
     // print("password yang diterima : " + jeniskelamin.toString());
     var endpoint =
-        Uri.parse("https://bohlimo.com/productByUsername?username=${mouse}");
+        Uri.parse("https://bohlimo.com/productByUsername?username=halojames");
     print(endpoint);
 
     var apiResult = await myhttp.get(endpoint);

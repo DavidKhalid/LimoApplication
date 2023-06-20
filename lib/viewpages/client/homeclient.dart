@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:limoapplication/main.dart';
+import 'package:limoapplication/model/modelnego.,dart/modelnego.dart';
+import 'package:limoapplication/model/modeltransaksi/modeltransaksi.dart';
 import 'package:limoapplication/model/session_manager.dart';
 import 'package:limoapplication/viewpages/client/fullDetailJobs.dart';
-import 'package:limoapplication/viewpages/client/trackingProgressClient.dart';
 import 'package:limoapplication/model/modelproduct/modelproduct.dart';
+import 'package:limoapplication/viewpages/user/homeuser.dart';
+import 'package:limoapplication/viewpages/client/trackingprogressclient.dart';
+import 'package:limoapplication/viewpages/user/trackingprogressuser.dart';
 
 class HomeClient extends StatefulWidget {
   @override
@@ -25,10 +29,13 @@ class _HomeClientState extends State<HomeClient> {
   int number = 0;
 
   late Future<ModelProduct> product;
+  late Future<ModelNego> nego;
 
   @override
   void initState() {
     super.initState();
+    product = ModelProduct.getProductByUsername();
+    nego = ModelNego.getDataNegoClient();
     Future<String> getUsername = sessionManager.getUsername();
     getUsername.then((value) {
       setState(() {
@@ -77,6 +84,7 @@ class _HomeClientState extends State<HomeClient> {
         portofolio = value;
       });
     });
+
     super.initState();
   }
 
@@ -137,7 +145,7 @@ class _HomeClientState extends State<HomeClient> {
               gradient: LinearGradient(
                 colors: [
                   Color(0xFFFA7A35),
-                  Color(0xFFFFFFFF),
+                  // Color(0xFFFFFFFF),
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -145,7 +153,7 @@ class _HomeClientState extends State<HomeClient> {
             ),
           ),
           FutureBuilder<ModelProduct>(
-              future: ModelProduct.getProductByUsername(mouse: username),
+              future: product,
               builder: (context, snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
@@ -176,8 +184,7 @@ class _HomeClientState extends State<HomeClient> {
                                 width: MediaQueryWidth * 8,
                                 height: BodyHeight * 0.25,
                                 decoration: BoxDecoration(
-                                  color:
-                                      Colors.blueGrey.shade100.withOpacity(0.6),
+                                  color: Color(0xFFFA7A35).withOpacity(0.6),
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Column(
@@ -264,374 +271,620 @@ class _HomeClientState extends State<HomeClient> {
               }),
         ],
       ),
-      ListView(
-        children: [
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: Text(
-                      "Crontract",
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ],
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) {
-                      return TrackingProgressClient();
-                    },
-                  ));
-                },
-                child: Container(
-                  margin: EdgeInsets.all(20),
-                  color: Colors.grey.shade300,
-                  width: MediaQueryWidth,
-                  height: BodyHeight * 0.27,
-                  child: Row(children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Text(
-                        "10.00",
-                        style: TextStyle(
-                            fontSize: 15,
+      // ListView(
+      //   children: [
+      //     Column(
+      //       children: [
+      //         Row(
+      //           mainAxisAlignment: MainAxisAlignment.center,
+      //           children: [
+      //             Padding(
+      //               padding: const EdgeInsets.only(top: 15),
+      //               child: Text(
+      //                 "Crontract",
+      //                 style: TextStyle(
+      //                     fontSize: 22,
+      //                     color: Colors.black,
+      //                     fontWeight: FontWeight.bold),
+      //               ),
+      //             )
+      //           ],
+      //         ),
+      //         GestureDetector(
+      //           onTap: () {
+      //             Navigator.of(context).push(MaterialPageRoute(
+      //               builder: (context) {
+      //                 return TrackingProgressClient();
+      //               },
+      //             ));
+      //           },
+      //           child: Container(
+      //             margin: EdgeInsets.all(20),
+      //             color: Colors.grey.shade300,
+      //             width: MediaQueryWidth,
+      //             height: BodyHeight * 0.27,
+      //             child: Row(children: [
+      //               Padding(
+      //                 padding: const EdgeInsets.only(left: 10, right: 10),
+      //                 child: Text(
+      //                   "10.00",
+      //                   style: TextStyle(
+      //                       fontSize: 15,
+      //                       color: Colors.black,
+      //                       fontWeight: FontWeight.w500),
+      //                 ),
+      //               ),
+      //               Container(
+      //                 width: MediaQueryWidth * 0.75,
+      //                 decoration: BoxDecoration(
+      //                   color: Color(0xFFFA7A35).withOpacity(0.9),
+      //                   borderRadius: BorderRadius.circular(30),
+      //                 ),
+      //                 child: Column(children: [
+      //                   ListTile(
+      //                     title: Padding(
+      //                       padding: const EdgeInsets.only(top: 35),
+      //                       child: Text(
+      //                         "Mobile App Prototype",
+      //                         style: TextStyle(
+      //                             fontSize: 15,
+      //                             color: Colors.black,
+      //                             fontWeight: FontWeight.bold),
+      //                       ),
+      //                     ),
+      //                     subtitle: Padding(
+      //                       padding: const EdgeInsets.only(top: 15),
+      //                       child: Text(
+      //                         "make mobile app",
+      //                         style: TextStyle(
+      //                             fontSize: 15,
+      //                             color: Colors.black,
+      //                             fontWeight: FontWeight.w400),
+      //                       ),
+      //                     ),
+      //                   ),
+      //                 ]),
+      //               )
+      //             ]),
+      //           ),
+      //         ),
+      //         Divider(
+      //           indent: 20,
+      //           endIndent: 20,
+      //           color: Colors.black,
+      //           thickness: 3,
+      //           height: 5,
+      //         ),
+      //         Container(
+      //           margin: EdgeInsets.all(20),
+      //           // color: Colors.grey.shade300,
+      //           width: MediaQueryWidth,
+      //           height: BodyHeight * 0.27,
+      //           child: Row(children: [
+      //             Padding(
+      //               padding: const EdgeInsets.only(left: 10, right: 10),
+      //               child: Text(
+      //                 "10.00",
+      //                 style: TextStyle(
+      //                     fontSize: 15,
+      //                     color: Colors.black,
+      //                     fontWeight: FontWeight.w500),
+      //               ),
+      //             ),
+      //             Container(
+      //               width: MediaQueryWidth * 0.75,
+      //               decoration: BoxDecoration(
+      //                 color: Color(0xFFFA7A35).withOpacity(0.9),
+      //                 borderRadius: BorderRadius.circular(30),
+      //               ),
+      //               child: Column(children: [
+      //                 ListTile(
+      //                   title: Padding(
+      //                     padding: const EdgeInsets.only(top: 35),
+      //                     child: Text(
+      //                       "Mobile App Prototype",
+      //                       style: TextStyle(
+      //                           fontSize: 15,
+      //                           color: Colors.black,
+      //                           fontWeight: FontWeight.bold),
+      //                     ),
+      //                   ),
+      //                   subtitle: Padding(
+      //                     padding: const EdgeInsets.only(top: 15),
+      //                     child: Text(
+      //                       "make mobile app",
+      //                       style: TextStyle(
+      //                           fontSize: 15,
+      //                           color: Colors.black,
+      //                           fontWeight: FontWeight.w400),
+      //                     ),
+      //                   ),
+      //                 ),
+      //               ]),
+      //             ),
+      //           ]),
+      //         ),
+      //         Divider(
+      //           indent: 20,
+      //           endIndent: 20,
+      //           color: Colors.black,
+      //           thickness: 3,
+      //           height: 5,
+      //         ),
+      //         Container(
+      //           margin: EdgeInsets.all(20),
+      //           // color: Colors.grey.shade300,
+      //           width: MediaQueryWidth,
+      //           height: BodyHeight * 0.27,
+      //           child: Row(children: [
+      //             Padding(
+      //               padding: const EdgeInsets.only(left: 10, right: 10),
+      //               child: Text(
+      //                 "10.00",
+      //                 style: TextStyle(
+      //                     fontSize: 15,
+      //                     color: Colors.black,
+      //                     fontWeight: FontWeight.w500),
+      //               ),
+      //             ),
+      //             Container(
+      //               width: MediaQueryWidth * 0.75,
+      //               decoration: BoxDecoration(
+      //                 color: Color(0xFFFA7A35).withOpacity(0.9),
+      //                 borderRadius: BorderRadius.circular(30),
+      //               ),
+      //               child: Column(children: [
+      //                 ListTile(
+      //                   title: Padding(
+      //                     padding: const EdgeInsets.only(top: 35),
+      //                     child: Text(
+      //                       "Mobile App Prototype",
+      //                       style: TextStyle(
+      //                           fontSize: 15,
+      //                           color: Colors.black,
+      //                           fontWeight: FontWeight.bold),
+      //                     ),
+      //                   ),
+      //                   subtitle: Padding(
+      //                     padding: const EdgeInsets.only(top: 15),
+      //                     child: Text(
+      //                       "make mobile app",
+      //                       style: TextStyle(
+      //                           fontSize: 15,
+      //                           color: Colors.black,
+      //                           fontWeight: FontWeight.w400),
+      //                     ),
+      //                   ),
+      //                 ),
+      //               ]),
+      //             ),
+      //           ]),
+      //         ),
+      //         Divider(
+      //           indent: 20,
+      //           endIndent: 20,
+      //           color: Colors.black,
+      //           thickness: 3,
+      //           height: 5,
+      //         ),
+      //         Container(
+      //           margin: EdgeInsets.all(20),
+      //           // color: Colors.grey.shade300,
+      //           width: MediaQueryWidth,
+      //           height: BodyHeight * 0.27,
+      //           child: Row(children: [
+      //             Padding(
+      //               padding: const EdgeInsets.only(left: 10, right: 10),
+      //               child: Text(
+      //                 "10.00",
+      //                 style: TextStyle(
+      //                     fontSize: 15,
+      //                     color: Colors.black,
+      //                     fontWeight: FontWeight.w500),
+      //               ),
+      //             ),
+      //             Container(
+      //               width: MediaQueryWidth * 0.75,
+      //               decoration: BoxDecoration(
+      //                 color: Color(0xFFFA7A35).withOpacity(0.9),
+      //                 borderRadius: BorderRadius.circular(30),
+      //               ),
+      //               child: Column(children: [
+      //                 ListTile(
+      //                   title: Padding(
+      //                     padding: const EdgeInsets.only(top: 35),
+      //                     child: Text(
+      //                       "Mobile App Prototype",
+      //                       style: TextStyle(
+      //                           fontSize: 15,
+      //                           color: Colors.black,
+      //                           fontWeight: FontWeight.bold),
+      //                     ),
+      //                   ),
+      //                   subtitle: Padding(
+      //                     padding: const EdgeInsets.only(top: 15),
+      //                     child: Text(
+      //                       "make mobile app",
+      //                       style: TextStyle(
+      //                           fontSize: 15,
+      //                           color: Colors.black,
+      //                           fontWeight: FontWeight.w400),
+      //                     ),
+      //                   ),
+      //                 ),
+      //               ]),
+      //             ),
+      //           ]),
+      //         ),
+      //         Divider(
+      //           indent: 20,
+      //           endIndent: 20,
+      //           color: Colors.black,
+      //           thickness: 3,
+      //           height: 5,
+      //         ),
+      //         Container(
+      //           margin: EdgeInsets.all(20),
+      //           // color: Colors.grey.shade300,
+      //           width: MediaQueryWidth,
+      //           height: BodyHeight * 0.27,
+      //           child: Row(children: [
+      //             Padding(
+      //               padding: const EdgeInsets.only(left: 10, right: 10),
+      //               child: Text(
+      //                 "10.00",
+      //                 style: TextStyle(
+      //                     fontSize: 15,
+      //                     color: Colors.black,
+      //                     fontWeight: FontWeight.w500),
+      //               ),
+      //             ),
+      //             Container(
+      //               width: MediaQueryWidth * 0.75,
+      //               decoration: BoxDecoration(
+      //                 color: Color(0xFFFA7A35).withOpacity(0.9),
+      //                 borderRadius: BorderRadius.circular(30),
+      //               ),
+      //               child: Column(children: [
+      //                 ListTile(
+      //                   title: Padding(
+      //                     padding: const EdgeInsets.only(top: 35),
+      //                     child: Text(
+      //                       "Mobile App Prototype",
+      //                       style: TextStyle(
+      //                           fontSize: 15,
+      //                           color: Colors.black,
+      //                           fontWeight: FontWeight.bold),
+      //                     ),
+      //                   ),
+      //                   subtitle: Padding(
+      //                     padding: const EdgeInsets.only(top: 15),
+      //                     child: Text(
+      //                       "make mobile app",
+      //                       style: TextStyle(
+      //                           fontSize: 15,
+      //                           color: Colors.black,
+      //                           fontWeight: FontWeight.w400),
+      //                     ),
+      //                   ),
+      //                 ),
+      //               ]),
+      //             ),
+      //           ]),
+      //         ),
+      //         Divider(
+      //           indent: 20,
+      //           endIndent: 20,
+      //           color: Colors.black,
+      //           thickness: 3,
+      //           height: 5,
+      //         ),
+      //         Container(
+      //           margin: EdgeInsets.all(20),
+      //           // color: Colors.grey.shade300,
+      //           width: MediaQueryWidth,
+      //           height: BodyHeight * 0.27,
+      //           child: Row(children: [
+      //             Padding(
+      //               padding: const EdgeInsets.only(left: 10, right: 10),
+      //               child: Text(
+      //                 "10.00",
+      //                 style: TextStyle(
+      //                     fontSize: 15,
+      //                     color: Colors.black,
+      //                     fontWeight: FontWeight.w500),
+      //               ),
+      //             ),
+      //             Container(
+      //               width: MediaQueryWidth * 0.75,
+      //               decoration: BoxDecoration(
+      //                 color: Color(0xFFFA7A35).withOpacity(0.9),
+      //                 borderRadius: BorderRadius.circular(30),
+      //               ),
+      //               child: Column(children: [
+      //                 ListTile(
+      //                   title: Padding(
+      //                     padding: const EdgeInsets.only(top: 35),
+      //                     child: Text(
+      //                       "Mobile App Prototype",
+      //                       style: TextStyle(
+      //                           fontSize: 15,
+      //                           color: Colors.black,
+      //                           fontWeight: FontWeight.bold),
+      //                     ),
+      //                   ),
+      //                   subtitle: Padding(
+      //                     padding: const EdgeInsets.only(top: 15),
+      //                     child: Text(
+      //                       "make mobile app",
+      //                       style: TextStyle(
+      //                           fontSize: 15,
+      //                           color: Colors.black,
+      //                           fontWeight: FontWeight.w400),
+      //                     ),
+      //                   ),
+      //                 ),
+      //               ]),
+      //             ),
+      //           ]),
+      //         ),
+      //         Divider(
+      //           indent: 20,
+      //           endIndent: 20,
+      //           color: Colors.black,
+      //           thickness: 3,
+      //           height: 5,
+      //         ),
+      //       ],
+      //     ),
+      //   ],
+      // ),
+      FutureBuilder<ModelNego>(
+          future: nego,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                print('Waiting...');
+                return const Center(child: CircularProgressIndicator());
+              default:
+                if (snapshot.hasError) {
+                  print(
+                      "Error, Data not Found :" + snapshot.hasError.toString());
+                  return const Center(child: Text("Error, Data not Found"));
+                } else {
+                  print("Data Founded");
+
+                  return ListView.builder(
+                    itemCount: snapshot.data!.data!.length,
+                    shrinkWrap: true,
+                    itemBuilder: (ctx, index) {
+                      print(snapshot);
+                      return Column(
+                        children: [
+                          Container(
+                            // color: Colors.green,
+                            margin: EdgeInsets.all(20),
+                            width: MediaQueryWidth,
+                            height: BodyHeight * 0.3,
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: MediaQueryWidth * 0.75,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFFA7A35).withOpacity(0.9),
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: Column(children: [
+                                      ListTile(
+                                        title: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 35),
+                                          child: Text(
+                                            snapshot
+                                                .data!.data![index].productName
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        subtitle: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 15),
+                                          child: Text(
+                                            snapshot
+                                                .data!.data![index].description
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                        ),
+                                      ),
+                                      (snapshot.data!.data![index].status ==
+                                              "pending")
+                                          ? Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                GestureDetector(
+                                                  // ini belum selesai
+                                                  onTap: () {
+                                                    print(snapshot
+                                                        .data!.data![index].id);
+                                                    ModelNego.endNegoDiterima(
+                                                            id_nego: snapshot
+                                                                .data!
+                                                                .data![index]
+                                                                .id
+                                                                .toString(),
+                                                            status: "diterima")
+                                                        .then((value) {
+                                                      ModelNego modelNego =
+                                                          value;
+                                                      Navigator.of(context)
+                                                          .pushReplacement(
+                                                              MaterialPageRoute(
+                                                        builder: (context) {
+                                                          return HomeClient();
+                                                        },
+                                                      ));
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: 18),
+                                                    width:
+                                                        MediaQueryWidth * 0.2,
+                                                    height:
+                                                        MediaQueryHeight * 0.04,
+                                                    child: Center(
+                                                      child: Text(
+                                                        "TERIMA",
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            color: Color(
+                                                                0xFFFA7A35),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                        color:
+                                                            Color(0xFFFFFFFF),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20)),
+                                                  ),
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    print(snapshot
+                                                        .data!.data![index].id);
+                                                    ModelNego.endNegoDitolak(
+                                                            id_nego: snapshot
+                                                                .data!
+                                                                .data![index]
+                                                                .id
+                                                                .toString(),
+                                                            status: "ditolak")
+                                                        .then((value) {
+                                                      ModelNego modelNego =
+                                                          value;
+                                                      Navigator.of(context)
+                                                          .pushReplacement(
+                                                              MaterialPageRoute(
+                                                        builder: (context) {
+                                                          return HomeClient();
+                                                        },
+                                                      ));
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: 15),
+                                                    width:
+                                                        MediaQueryWidth * 0.2,
+                                                    height:
+                                                        MediaQueryHeight * 0.04,
+                                                    child: Center(
+                                                      child: Text(
+                                                        "TOLAK",
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            color: Color(
+                                                                0xFFFA7A35),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                        color:
+                                                            Color(0xFFFFFFFF),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20)),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          : (snapshot.data!.data![index]
+                                                      .status ==
+                                                  "ditolak")
+                                              ? Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 50),
+                                                  child: Text(
+                                                    "NEGO DITOLAK",
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                )
+                                              : Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 50),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      ModelTransaksi.trackingstatus(
+                                                              id_nego: snapshot
+                                                                  .data!
+                                                                  .data![index]
+                                                                  .id
+                                                                  .toString())
+                                                          .then((value) {
+                                                        Navigator.of(context)
+                                                            .push(
+                                                                MaterialPageRoute(
+                                                          builder: (context) {
+                                                            return TrackingProgressClient(
+                                                                id_transaksi: value
+                                                                    .data![0]
+                                                                    .id_transksi
+                                                                    .toString());
+                                                          },
+                                                        ));
+                                                      });
+                                                    },
+                                                    child: Text(
+                                                      "DITERIMA",
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                )
+                                    ]),
+                                  )
+                                ]),
+                          ),
+                          Divider(
+                            indent: 20,
+                            endIndent: 20,
                             color: Colors.black,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQueryWidth * 0.75,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFA7A35).withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Column(children: [
-                        ListTile(
-                          title: Padding(
-                            padding: const EdgeInsets.only(top: 35),
-                            child: Text(
-                              "Mobile App Prototype",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                            thickness: 3,
+                            height: 5,
                           ),
-                          subtitle: Padding(
-                            padding: const EdgeInsets.only(top: 15),
-                            child: Text(
-                              "make mobile app",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                          ),
-                        ),
-                      ]),
-                    )
-                  ]),
-                ),
-              ),
-              Divider(
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black,
-                thickness: 3,
-                height: 5,
-              ),
-              Container(
-                margin: EdgeInsets.all(20),
-                // color: Colors.grey.shade300,
-                width: MediaQueryWidth,
-                height: BodyHeight * 0.27,
-                child: Row(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Text(
-                      "10.00",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQueryWidth * 0.75,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFA7A35).withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(children: [
-                      ListTile(
-                        title: Padding(
-                          padding: const EdgeInsets.only(top: 35),
-                          child: Text(
-                            "Mobile App Prototype",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Text(
-                            "make mobile app",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                    ]),
-                  ),
-                ]),
-              ),
-              Divider(
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black,
-                thickness: 3,
-                height: 5,
-              ),
-              Container(
-                margin: EdgeInsets.all(20),
-                // color: Colors.grey.shade300,
-                width: MediaQueryWidth,
-                height: BodyHeight * 0.27,
-                child: Row(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Text(
-                      "10.00",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQueryWidth * 0.75,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFA7A35).withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(children: [
-                      ListTile(
-                        title: Padding(
-                          padding: const EdgeInsets.only(top: 35),
-                          child: Text(
-                            "Mobile App Prototype",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Text(
-                            "make mobile app",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                    ]),
-                  ),
-                ]),
-              ),
-              Divider(
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black,
-                thickness: 3,
-                height: 5,
-              ),
-              Container(
-                margin: EdgeInsets.all(20),
-                // color: Colors.grey.shade300,
-                width: MediaQueryWidth,
-                height: BodyHeight * 0.27,
-                child: Row(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Text(
-                      "10.00",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQueryWidth * 0.75,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFA7A35).withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(children: [
-                      ListTile(
-                        title: Padding(
-                          padding: const EdgeInsets.only(top: 35),
-                          child: Text(
-                            "Mobile App Prototype",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Text(
-                            "make mobile app",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                    ]),
-                  ),
-                ]),
-              ),
-              Divider(
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black,
-                thickness: 3,
-                height: 5,
-              ),
-              Container(
-                margin: EdgeInsets.all(20),
-                // color: Colors.grey.shade300,
-                width: MediaQueryWidth,
-                height: BodyHeight * 0.27,
-                child: Row(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Text(
-                      "10.00",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQueryWidth * 0.75,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFA7A35).withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(children: [
-                      ListTile(
-                        title: Padding(
-                          padding: const EdgeInsets.only(top: 35),
-                          child: Text(
-                            "Mobile App Prototype",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Text(
-                            "make mobile app",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                    ]),
-                  ),
-                ]),
-              ),
-              Divider(
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black,
-                thickness: 3,
-                height: 5,
-              ),
-              Container(
-                margin: EdgeInsets.all(20),
-                // color: Colors.grey.shade300,
-                width: MediaQueryWidth,
-                height: BodyHeight * 0.27,
-                child: Row(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Text(
-                      "10.00",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQueryWidth * 0.75,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFA7A35).withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(children: [
-                      ListTile(
-                        title: Padding(
-                          padding: const EdgeInsets.only(top: 35),
-                          child: Text(
-                            "Mobile App Prototype",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Text(
-                            "make mobile app",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                    ]),
-                  ),
-                ]),
-              ),
-              Divider(
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black,
-                thickness: 3,
-                height: 5,
-              ),
-            ],
-          ),
-        ],
-      ),
+                        ],
+                      );
+                    },
+                  );
+                  //
+                }
+            }
+          }),
       Stack(
         children: [
           Image(
