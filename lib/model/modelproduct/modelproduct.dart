@@ -10,19 +10,24 @@ class Data {
   String? created_by;
   String? price;
   String? keterangan;
+  String? statusproduct;
+  String? alamat;
 
   // String? role;
 
-  Data({
-    this.id,
-    this.productName,
-    this.kategori,
-    this.username,
-    this.created_by,
-    this.price,
-    this.keterangan,
-    // this.role,
-  });
+  Data(
+      {this.id,
+      this.productName,
+      this.kategori,
+      this.username,
+      this.created_by,
+      this.price,
+      this.keterangan,
+      this.statusproduct,
+      this.alamat
+
+      // this.role,
+      });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -32,6 +37,9 @@ class Data {
     created_by = json['created_by'];
     price = json['price'];
     keterangan = json["keterangan"];
+    statusproduct = json['status'].toString();
+    alamat = json['alamat'].toString();
+
     // role = json['role'] ?? "TESSTTTTT";
   }
 }
@@ -134,7 +142,9 @@ class ModelProduct {
     }
   }
 
-  static Future<ModelProduct> getProductByUsername(
+  static Future<ModelProduct> getProductByUsername({
+    required String username,
+  }
       // this is GET Product By Username
 
       // required String kategori,
@@ -145,7 +155,7 @@ class ModelProduct {
 
     // print("password yang diterima : " + jeniskelamin.toString());
     var endpoint =
-        Uri.parse("https://bohlimo.com/productByUsername?username=halojames");
+        Uri.parse("https://bohlimo.com/productByUsername?username=$username");
     print(endpoint);
 
     var apiResult = await myhttp.get(endpoint);
@@ -215,10 +225,10 @@ class ModelProduct {
     print("password yang diterima : " + kategori.toString());
 
     // print("password yang diterima : " + jeniskelamin.toString());
-    var endpoint = Uri.parse("https://bohlimo.com/product?username=agus");
+    var endpoint = Uri.parse("https://bohlimo.com/product?username=davidk");
     var apiResult = await myhttp.post(endpoint, body: {
       "username": username,
-      "productname": productname,
+      "productName": productname,
       "price": price,
       "kategori": kategori,
       "keterangan": keterangan,

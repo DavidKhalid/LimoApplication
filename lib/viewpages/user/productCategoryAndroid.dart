@@ -79,7 +79,7 @@ class _ProductCategoryAndroidState extends State<ProductCategoryAndroid> {
                                         return Container(
                                           margin: EdgeInsets.all(20),
                                           width: mediaQueryWidth * 8,
-                                          height: bodyHeight * 0.2,
+                                          height: bodyHeight * 0.22,
                                           decoration: BoxDecoration(
                                             color: Colors.blueGrey.shade100
                                                 .withOpacity(0.6),
@@ -151,9 +151,13 @@ class _ProductCategoryAndroidState extends State<ProductCategoryAndroid> {
                                                 padding: const EdgeInsets.only(
                                                     right: 10),
                                                 child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
+                                                  // mainAxisAlignment:
+                                                  //     MainAxisAlignment
+                                                  //         .spaceEvenly,
                                                   children: [
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
                                                     Text.rich(
                                                       TextSpan(
                                                         children: [
@@ -183,6 +187,32 @@ class _ProductCategoryAndroidState extends State<ProductCategoryAndroid> {
                                                           ),
                                                         ],
                                                       ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 25,
+                                                    ),
+                                                    Text.rich(
+                                                      TextSpan(
+                                                        text: "Alamat :",
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                    ),
+                                                    Text.rich(
+                                                      TextSpan(
+                                                        text: snapshot.data!
+                                                            .data![index].alamat
+                                                            .toString(),
+                                                      ),
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: Colors.black),
                                                     )
                                                   ],
                                                 ),

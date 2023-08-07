@@ -145,7 +145,11 @@ class _TrackingProgressClientState extends State<TrackingProgressClient> {
                   print("berhasil");
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) {
-                      return HomeClient();
+                      return HomeClient(
+                        // id_status: "0",
+                        statusproduct: "0",
+                        
+                      );
                     },
                   ));
                 });

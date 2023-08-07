@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:limoapplication/main.dart';
 import 'package:limoapplication/model/modelnego.,dart/modelnego.dart';
+// import 'package:flutter/src/widgets/container.dart';
+// import 'package:flutter/src/widgets/framework.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:limoapplication/main.dart';
+// import 'package:limoapplication/model/modelnego.dart/modelnego.dart';
 import 'package:limoapplication/model/modeltransaksi/modeltransaksi.dart';
 import 'package:limoapplication/model/session_manager.dart';
+import 'package:limoapplication/viewpages/client/addproduct.dart';
 import 'package:limoapplication/viewpages/client/fullDetailJobs.dart';
 import 'package:limoapplication/model/modelproduct/modelproduct.dart';
+import 'package:limoapplication/viewpages/loginclient.dart';
+import 'package:limoapplication/viewpages/loginuser.dart';
 import 'package:limoapplication/viewpages/user/homeuser.dart';
 import 'package:limoapplication/viewpages/client/trackingprogressclient.dart';
 import 'package:limoapplication/viewpages/user/trackingprogressuser.dart';
 
 class HomeClient extends StatefulWidget {
+  // final String id_status;
+  final String statusproduct;
+
+  const HomeClient({
+    Key? key,
+    // required this.id_status,
+    required this.statusproduct,
+  }) : super(key: key);
+
   @override
   State<HomeClient> createState() => _HomeClientState();
 }
@@ -33,15 +47,18 @@ class _HomeClientState extends State<HomeClient> {
 
   @override
   void initState() {
-    super.initState();
-    product = ModelProduct.getProductByUsername();
-    nego = ModelNego.getDataNegoClient();
+    super.initState(); // pada initstate perintahnya dijalankan baris perbaris
     Future<String> getUsername = sessionManager.getUsername();
     getUsername.then((value) {
       setState(() {
         username = value;
       });
     });
+    // product = ModelProduct.getProductByUsername(
+    //     username:
+    //         username); // value masih statis belum bisa dinamis, jika ingin product sesuai dengan yang login sebagai client, value username masih harus diisi manual
+
+    nego = ModelNego.getDataNegoClient();
 
     Future<String> getNama = sessionManager.getNama();
     getNama.then((value) {
@@ -124,10 +141,22 @@ class _HomeClientState extends State<HomeClient> {
         ],
       ),
       actions: [
-        Icon(
-          Icons.more_vert,
-          size: 30,
-          color: Colors.black,
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) {
+                return AddProduct();
+              },
+            ));
+          },
+          child: Icon(
+            Icons.add_circle,
+            size: 30,
+            color: Colors.black,
+          ),
+        ),
+        SizedBox(
+          width: 10,
         )
       ],
     );
@@ -145,7 +174,7 @@ class _HomeClientState extends State<HomeClient> {
               gradient: LinearGradient(
                 colors: [
                   Color(0xFFFA7A35),
-                  // Color(0xFFFFFFFF),
+                  Color(0xFFFFFFFF),
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -153,7 +182,7 @@ class _HomeClientState extends State<HomeClient> {
             ),
           ),
           FutureBuilder<ModelProduct>(
-              future: product,
+              future: ModelProduct.getProductByUsername(username: username),
               builder: (context, snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
@@ -170,99 +199,228 @@ class _HomeClientState extends State<HomeClient> {
                       // if (snapshot.data!.data!.length != null) {
                       //   print(snapshot.data);
                       // }
-
+                      if (snapshot.data!.data!.length == 0) {
+                        return Text("no content");
+                      }
                       return ListView.builder(
                         itemCount: snapshot.data!.data!.length,
                         shrinkWrap: true,
                         itemBuilder: (ctx, index) {
                           print(snapshot);
-                          return Column(
-                            // pakai futurebuilder mulai dari sini
+                          return Stack(
                             children: [
-                              Container(
-                                margin: EdgeInsets.all(20),
-                                width: MediaQueryWidth * 8,
-                                height: BodyHeight * 0.25,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFFA7A35).withOpacity(0.6),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: Text(
-                                          snapshot
-                                              .data!.data![index].productName
-                                              .toString(),
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                              height: 1.5),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: Text(
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          snapshot.data!.data![index].keterangan
-                                              .toString(),
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.black,
-                                              height: 1.5),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                              Column(
+                                // pakai futurebuilder mulai dari sini
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.all(20),
+                                    width: MediaQueryWidth * 8,
+                                    height: BodyHeight * 0.25,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFFA7A35).withOpacity(0.6),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 20),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                Navigator.of(context)
-                                                    .push(MaterialPageRoute(
-                                                  builder: (context) {
-                                                    return FullDetailJobs(
-                                                      title: snapshot
-                                                          .data!
-                                                          .data![index]
-                                                          .productName
-                                                          .toString(),
-                                                      price: snapshot.data!
-                                                          .data![index].price
-                                                          .toString(),
-                                                      keterangan: snapshot
-                                                          .data!
-                                                          .data![index]
-                                                          .keterangan
-                                                          .toString(),
-                                                    );
-                                                  },
-                                                ));
-                                              },
-                                              child: Text(
-                                                "Read more ...",
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                            padding: const EdgeInsets.all(10),
+                                            child: Text(
+                                              snapshot.data!.data![index]
+                                                  .productName
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  height: 1.5),
                                             ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(10),
+                                            child: Text(
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                              snapshot
+                                                  .data!.data![index].keterangan
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                  height: 1.5),
+                                            ),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 20),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.of(context)
+                                                        .push(MaterialPageRoute(
+                                                      builder: (context) {
+                                                        return FullDetailJobs(
+                                                          title: snapshot
+                                                              .data!
+                                                              .data![index]
+                                                              .productName
+                                                              .toString(),
+                                                          price: snapshot
+                                                              .data!
+                                                              .data![index]
+                                                              .price
+                                                              .toString(),
+                                                          keterangan: snapshot
+                                                              .data!
+                                                              .data![index]
+                                                              .keterangan
+                                                              .toString(),
+                                                        );
+                                                      },
+                                                    ));
+                                                  },
+                                                  child: Text(
+                                                    "Read more ...",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                              (snapshot.data!.data![index]
+                                                          .statusproduct
+                                                          .toString() ==
+                                                      "0")
+                                                  ? Text("Pending")
+                                                  : (snapshot.data!.data![index]
+                                                              .statusproduct
+                                                              .toString() ==
+                                                          "1")
+                                                      ? Text("Accepted")
+                                                      : Text("Rejected")
+                                              // Text(snapshot.data!.data![index]
+                                              //     .statusproduct
+                                              //     .toString())
+                                            ],
                                           )
-                                        ],
-                                      )
-                                    ]),
+                                        ]),
+                                  ),
+                                ],
                               ),
                             ],
                           );
+
+                          // : Column(
+                          //     // pakai futurebuilder mulai dari sini
+                          //     children: [
+                          //       Container(
+                          //         margin: EdgeInsets.all(20),
+                          //         width: MediaQueryWidth * 8,
+                          //         height: BodyHeight * 0.25,
+                          //         decoration: BoxDecoration(
+                          //           color: Color(0xFFFA7A35)
+                          //               .withOpacity(0.6),
+                          //           borderRadius:
+                          //               BorderRadius.circular(20),
+                          //         ),
+                          //         child: Column(
+                          //             crossAxisAlignment:
+                          //                 CrossAxisAlignment.start,
+                          //             children: [
+                          //               Padding(
+                          //                 padding:
+                          //                     const EdgeInsets.all(10),
+                          //                 child: Text(
+                          //                   snapshot.data!.data![index]
+                          //                       .productName
+                          //                       .toString(),
+                          //                   style: TextStyle(
+                          //                       fontSize: 16,
+                          //                       color: Colors.black,
+                          //                       fontWeight:
+                          //                           FontWeight.bold,
+                          //                       height: 1.5),
+                          //                 ),
+                          //               ),
+                          //               Padding(
+                          //                 padding:
+                          //                     const EdgeInsets.all(10),
+                          //                 child: Text(
+                          //                   overflow:
+                          //                       TextOverflow.ellipsis,
+                          //                   maxLines: 2,
+                          //                   snapshot.data!.data![index]
+                          //                       .keterangan
+                          //                       .toString(),
+                          //                   style: TextStyle(
+                          //                       fontSize: 14,
+                          //                       color: Colors.black,
+                          //                       height: 1.5),
+                          //                 ),
+                          //               ),
+                          //               Row(
+                          //                 mainAxisAlignment:
+                          //                     MainAxisAlignment
+                          //                         .spaceEvenly,
+                          //                 children: [
+                          //                   Padding(
+                          //                     padding:
+                          //                         const EdgeInsets.only(
+                          //                             right: 20),
+                          //                     child: GestureDetector(
+                          //                       onTap: () {
+                          //                         Navigator.of(context)
+                          //                             .push(
+                          //                                 MaterialPageRoute(
+                          //                           builder: (context) {
+                          //                             return FullDetailJobs(
+                          //                               title: snapshot
+                          //                                   .data!
+                          //                                   .data![
+                          //                                       index]
+                          //                                   .productName
+                          //                                   .toString(),
+                          //                               price: snapshot
+                          //                                   .data!
+                          //                                   .data![
+                          //                                       index]
+                          //                                   .price
+                          //                                   .toString(),
+                          //                               keterangan: snapshot
+                          //                                   .data!
+                          //                                   .data![
+                          //                                       index]
+                          //                                   .keterangan
+                          //                                   .toString(),
+                          //                             );
+                          //                           },
+                          //                         ));
+                          //                       },
+                          //                       child: Text(
+                          //                         "Read more ...",
+                          //                         style: TextStyle(
+                          //                             color:
+                          //                                 Colors.black,
+                          //                             fontSize: 12,
+                          //                             fontWeight:
+                          //                                 FontWeight
+                          //                                     .bold),
+                          //                       ),
+                          //                     ),
+                          //                   ),
+                          //                   Text("Ditolak")
+                          //                 ],
+                          //               )
+                          //             ]),
+                          //       ),
+                          //     ],
+                          //   );
                         },
                       );
                       //
@@ -730,7 +888,10 @@ class _HomeClientState extends State<HomeClient> {
                                                           .pushReplacement(
                                                               MaterialPageRoute(
                                                         builder: (context) {
-                                                          return HomeClient();
+                                                          return HomeClient(
+                                                            // id_status: "0",
+                                                            statusproduct: "0",
+                                                          );
                                                         },
                                                       ));
                                                     });
@@ -780,7 +941,10 @@ class _HomeClientState extends State<HomeClient> {
                                                           .pushReplacement(
                                                               MaterialPageRoute(
                                                         builder: (context) {
-                                                          return HomeClient();
+                                                          return HomeClient(
+                                                            // id_status: "0",
+                                                            statusproduct: "0",
+                                                          );
                                                         },
                                                       ));
                                                     });
@@ -821,13 +985,27 @@ class _HomeClientState extends State<HomeClient> {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           top: 50),
-                                                  child: Text(
-                                                    "NEGO DITOLAK",
-                                                    style: TextStyle(
-                                                        fontSize: 16,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                  child: Container(
+                                                    width: 150,
+                                                    height: 20,
+                                                    child: Center(
+                                                      child: Text(
+                                                        "NEGO DITOLAK",
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            color: Color(
+                                                                0xFFFA7A35),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                      color: Colors.white,
+                                                    ),
                                                   ),
                                                 )
                                               : Padding(
@@ -856,13 +1034,27 @@ class _HomeClientState extends State<HomeClient> {
                                                         ));
                                                       });
                                                     },
-                                                    child: Text(
-                                                      "DITERIMA",
-                                                      style: TextStyle(
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.white),
+                                                    child: Container(
+                                                      width: 150,
+                                                      height: 20,
+                                                      child: Center(
+                                                        child: Text(
+                                                          "DITERIMA",
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Color(
+                                                                  0xFFFA7A35)),
+                                                        ),
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                      ),
                                                     ),
                                                   ),
                                                 )
@@ -1016,7 +1208,14 @@ class _HomeClientState extends State<HomeClient> {
             left: 140,
             bottom: 7,
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                sessionManager.logout();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) {
+                    return LoginPageClient();
+                  },
+                ));
+              },
               child: Container(
                 width: MediaQueryWidth * 0.3,
                 height: BodyHeight * 0.06,

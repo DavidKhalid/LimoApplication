@@ -200,10 +200,14 @@ class _LoginPageState extends State<LoginPageClient> {
                                       nik: data?.nik.toString(),
                                       portofolio: data?.portofolio.toString(),
                                     );
+                                  
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                         builder: (context) {
-                                          return HomeClient();
+                                          return HomeClient(
+                                            // id_status: "0",
+                                            statusproduct: "0",
+                                          );
                                         },
                                       ),
                                     );

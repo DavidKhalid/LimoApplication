@@ -30,7 +30,8 @@ class _TrackingProgressUserState extends State<TrackingProgressUser> {
                 child: const Icon(Icons.arrow_back_ios_new),
                 onTap: () => Navigator.of(context).pop())),
         body: Stack(children: [
-          (widget.id_status == "0")
+          (widget.id_status ==
+                  "0") // clinet udah terima project dan membutuhkan pembayaran dari user
               ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +50,8 @@ class _TrackingProgressUserState extends State<TrackingProgressUser> {
                     ],
                   ),
                 )
-              : (widget.id_status == "1")
+              : (widget.id_status ==
+                      "1") // pembayaran sudah diterima dan diproved admin, dan project dikerjakan. note penting tracking project step step tidak jadi dipakai.
                   ? const Center(
                       child: Text(
                           "Pembayaran telah selesai dan project sedang dikerjakan"))

@@ -89,7 +89,7 @@ class ModelNego {
 
     // print("password yang diterima : " + jeniskelamin.toString());
     var endpoint =
-        Uri.parse("https://bohlimo.com/nego?username=parman&role=user");
+        Uri.parse("https://bohlimo.com/nego?username=suhu&role=user");
     var apiResult = await myhttp.get(endpoint);
     //
 
@@ -115,7 +115,7 @@ class ModelNego {
 
     // print("password yang diterima : " + jeniskelamin.toString());
     var endpoint =
-        Uri.parse("https://bohlimo.com/nego?username=sandy&role=client");
+        Uri.parse("https://bohlimo.com/nego?username=davidk&role=client");
     var apiResult = await myhttp.get(endpoint);
     //
 
@@ -142,7 +142,7 @@ class ModelNego {
 
     // print("password yang diterima : " + jeniskelamin.toString());
     var endpoint =
-        Uri.parse("https://bohlimo.com/nego?username=parman&id_product=3");
+        Uri.parse("https://bohlimo.com/nego?username=suhu&id_product=4");
     var apiResult = await myhttp.post(endpoint, body: {
       "price": price,
       "deadline": deadline,

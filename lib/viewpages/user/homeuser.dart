@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:limoapplication/model/modelnego.,dart/modelnego.dart';
 import 'package:limoapplication/model/modeltransaksi/modeltransaksi.dart';
-import 'package:limoapplication/model/session_managerUser.dart';
+// import 'package:limoapplication/model/session_managerUser.dart';
 import 'package:limoapplication/model/session_manager.dart';
 import 'package:limoapplication/viewpages/loginuser.dart';
+import 'package:limoapplication/viewpages/user/detailtransaksiuser.dart';
+import 'package:limoapplication/viewpages/user/pendingpage.dart';
 import 'package:limoapplication/viewpages/user/productCategoriUI.dart';
 import 'package:limoapplication/viewpages/user/productCategoriWeb.dart';
 import 'package:limoapplication/viewpages/user/productCategoryAndroid.dart';
+import 'package:limoapplication/viewpages/user/tolakpage.dart';
 import 'package:limoapplication/viewpages/user/trackingprogressuser.dart';
 import 'package:limoapplication/model/modelproduct/modelproduct.dart';
-
-import 'package:limoapplication/model/session_managerUser.dart';
 
 class HomeUser extends StatefulWidget {
   @override
@@ -37,7 +38,7 @@ class _HomeUserState extends State<HomeUser> {
       });
     });
 
-    nego = ModelNego.getDataNegoUser();
+    // nego = ModelNego.getDataNegoUser();
 
     // Future<String> getUsernameUser = sessionManager.getUsernameUser();
     // getUsernameUser.then((value) {
@@ -321,7 +322,7 @@ class _HomeUserState extends State<HomeUser> {
         ],
       ),
       FutureBuilder<ModelNego>(
-          future: nego,
+          future: ModelNego.getDataNegoUser(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -344,12 +345,18 @@ class _HomeUserState extends State<HomeUser> {
                         children: [
                           GestureDetector(
                             onTap: () {
+                              print("id nego:");
                               print(snapshot.data!.data![index].id.toString());
                               if (snapshot.data!.data![index].status
                                       .toString() ==
                                   "pending") {
                                 print("nego sedang pending"); // hapus baris ini
-                                return null; // hapus baris ini
+                                // return null; // hapus baris ini
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) {
+                                    return PendingPage();
+                                  },
+                                ));
                                 // bikin satu halaman lagi untuk pending
                                 // bikin satu navigator lagi yang kalau di click akan menuju ke halaman tolak
                                 // untuk menampilkan status di tolak
@@ -361,7 +368,12 @@ class _HomeUserState extends State<HomeUser> {
                                 if (value.data!.isEmpty) {
                                   print(
                                       "transaksi di nego ini ditolak"); // hapus baris ini
-                                  return null; // hapus baris ini
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) {
+                                      return TolakPage();
+                                    },
+                                  ));
+                                  return;
                                   // bikin satu halaman lagi untuk tolak
                                   // bikin satu navigator lagi yang kalau di click akan menuju ke halaman tolak
                                   // untuk menampilkan status di tolak
@@ -370,6 +382,17 @@ class _HomeUserState extends State<HomeUser> {
                                 print("value");
                                 print(value.data![0].id_transksi);
                                 print(value.data![0].status);
+                                if (value.data![0].status.toString() == "2") {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) {
+                                      return DetailTransaksiUser(
+                                        id_transaksi: value.data![0].id_transksi
+                                            .toString(),
+                                      );
+                                    },
+                                  ));
+                                  return;
+                                }
                                 Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) {
                                     return TrackingProgressUser(
@@ -434,7 +457,7 @@ class _HomeUserState extends State<HomeUser> {
                                               : (snapshot.data!.data![index]
                                                           .status
                                                           .toString() ==
-                                                      "diterima")
+                                                      "done")
                                                   ? Icon(Icons.check,
                                                       color: Colors.green)
                                                   : Icon(
@@ -473,94 +496,6 @@ class _HomeUserState extends State<HomeUser> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Text(
-                      "Profile",
-                      style: TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("Nama"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("David Khalid"),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("Email"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("david@gmail.com"),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("Jenis Kelamin"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("Laki-laki"),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("NIK"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("0987612345"),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("Alamat"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("Karang Rejo"),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("Portofolio"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text("davidporto@gmail.com"),
-                      ),
-                    ],
-                  ),
                   Padding(
                     padding: const EdgeInsets.all(20),
                     child: Text(
