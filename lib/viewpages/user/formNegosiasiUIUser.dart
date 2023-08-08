@@ -39,6 +39,7 @@ class _FormNegosiasiUIUserState extends State<FormNegosiasiUIUser> {
     final BodyHeight = MediaQueryHeight - MediaQuery.of(context).padding.top;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      builder: EasyLoading.init(),
       home: Scaffold(
         body: ListView(
           children: [

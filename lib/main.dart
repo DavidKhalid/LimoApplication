@@ -4,6 +4,7 @@
 // import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:flutter/services.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:limoapplication/viewpages/landingpage.dart';
@@ -70,8 +71,10 @@ class MyApp extends StatelessWidget {
     //   systemNavigationBarIconBrightness: Brightness.dark,
     // ));
     return MaterialApp(
+      // title: "FlutterEasyLoading",
       debugShowCheckedModeBanner: false,
       home: LandingPage(),
+      // builder: EasyLoading.init(),
     );
   }
 }
