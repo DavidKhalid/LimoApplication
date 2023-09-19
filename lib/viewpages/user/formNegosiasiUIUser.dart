@@ -5,13 +5,25 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:limoapplication/model/modelnego.,dart/modelnego.dart';
 import 'package:limoapplication/model/session_manager.dart';
 import 'package:limoapplication/viewpages/user/homeuser.dart';
+import 'package:limoapplication/model/session_manager.dart';
 
 class FormNegosiasiUIUser extends StatefulWidget {
+
+  final String product_id;
+
+  const FormNegosiasiUIUser({
+    Key? key,
+    // required this.id_status,
+    required this.product_id,
+  }) : super(key: key);
+
   @override
   State<FormNegosiasiUIUser> createState() => _FormNegosiasiUIUserState();
 }
 
 class _FormNegosiasiUIUserState extends State<FormNegosiasiUIUser> {
+  SessionManager sessionManager = SessionManager();
+  String username = "";
   // TextEditingController productnameController = TextEditingController();
   TextEditingController dateLineController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -25,6 +37,12 @@ class _FormNegosiasiUIUserState extends State<FormNegosiasiUIUser> {
       ..indicatorType = EasyLoadingIndicatorType.circle
       ..loadingStyle = EasyLoadingStyle.light;
     EasyLoading.dismiss();
+    Future<String> getUsername = sessionManager.getUsername();
+    getUsername.then((value) {
+      setState(() {
+        username = value;
+      });
+    });
   }
 
   @override
@@ -145,6 +163,8 @@ class _FormNegosiasiUIUserState extends State<FormNegosiasiUIUser> {
                     price: priceController.text,
                     deadline: dateLineController.text,
                     description: descriptionController.text,
+                    username: username,
+                    product_id: widget.product_id
                   ).then((value) {
                     ModelNego modelnego = value;
                     print(value.status);

@@ -36,8 +36,8 @@ class _TrackingProgressUserState extends State<TrackingProgressUser> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Nama : "),
-                      const Text("Nomor Rekening : "),
+                      const Text("Nama : LIMO"),
+                      const Text("Nomor Rekening : 7875102486"),
                       Container(
                         width: mediaqueryWidth * 0.5,
                         height: mediaqueryHeight * 0.5,

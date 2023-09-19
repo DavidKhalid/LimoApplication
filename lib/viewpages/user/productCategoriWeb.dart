@@ -130,6 +130,11 @@ class _ProductCategoryWebState extends State<ProductCategoryWeb> {
                                                                 .data![index]
                                                                 .keterangan
                                                                 .toString(),
+                                                            product_id: snapshot
+                                                                .data!
+                                                                .data![index]
+                                                                .id
+                                                                .toString(),
                                                           );
                                                         },
                                                       ));

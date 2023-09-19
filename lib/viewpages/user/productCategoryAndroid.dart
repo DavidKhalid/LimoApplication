@@ -130,6 +130,7 @@ class _ProductCategoryAndroidState extends State<ProductCategoryAndroid> {
                                                                 .data![index]
                                                                 .keterangan
                                                                 .toString(),
+                                                            product_id: snapshot.data!.data![index].id.toString(),
                                                           );
                                                         },
                                                       ));

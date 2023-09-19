@@ -58,7 +58,7 @@ class _HomeClientState extends State<HomeClient> {
     //     username:
     //         username); // value masih statis belum bisa dinamis, jika ingin product sesuai dengan yang login sebagai client, value username masih harus diisi manual
 
-    nego = ModelNego.getDataNegoClient();
+    nego = ModelNego.getDataNegoClient(username: username, role: "client");
 
     Future<String> getNama = sessionManager.getNama();
     getNama.then((value) {
@@ -200,7 +200,14 @@ class _HomeClientState extends State<HomeClient> {
                       //   print(snapshot.data);
                       // }
                       if (snapshot.data!.data!.length == 0) {
-                        return Text("no content");
+                        return Center(
+                            child: Text(
+                          "No Content",
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ));
                       }
                       return ListView.builder(
                         itemCount: snapshot.data!.data!.length,
@@ -811,6 +818,17 @@ class _HomeClientState extends State<HomeClient> {
                   return const Center(child: Text("Error, Data not Found"));
                 } else {
                   print("Data Founded");
+
+                  if (snapshot.data!.data!.length == 0) {
+                    return Center(
+                        child: Text(
+                      "Belum Ada Transaksi",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ));
+                  }
 
                   return ListView.builder(
                     itemCount: snapshot.data!.data!.length,

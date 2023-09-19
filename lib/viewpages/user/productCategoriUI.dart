@@ -129,6 +129,7 @@ class _ProductCatergoryUIState extends State<ProductCatergoryUI> {
                                                                 .data![index]
                                                                 .username
                                                                 .toString(),
+                                                            product_id: snapshot.data!.data![index].id.toString(),
                                                           );
                                                         },
                                                       ));

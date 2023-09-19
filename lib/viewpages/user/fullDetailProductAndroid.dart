@@ -8,12 +8,14 @@ class FullDetailProductAndroid extends StatefulWidget {
   final String title;
   final String username;
   final String keterangan;
+  final String product_id;
 
   const FullDetailProductAndroid({
     Key? key,
     required this.title,
     required this.username,
     required this.keterangan,
+    required this.product_id,
   }) : super(key: key);
 
   @override
@@ -99,7 +101,7 @@ class _FullDetailProductAndroidState extends State<FullDetailProductAndroid> {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) {
-                      return FormNegoisasiAndroidUser();
+                      return FormNegoisasiAndroidUser(product_id: widget.product_id,);
                     },
                   ));
                 },

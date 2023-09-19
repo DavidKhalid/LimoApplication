@@ -105,17 +105,20 @@ class ModelNego {
     }
   }
 
-  static Future<ModelNego> getDataNegoClient(// this is GET UI/UX(UI)
+  static Future<ModelNego> getDataNegoClient({
+      required String username,
+      required String role,
+  }
 
-      // required String kategori,
+      
 
-      // required String sebagai
+      
       ) async {
     // print("password yang diterima : " + kategori.toString());
 
     // print("password yang diterima : " + jeniskelamin.toString());
     var endpoint =
-        Uri.parse("https://bohlimo.com/nego?username=davidk&role=client");
+        Uri.parse("https://bohlimo.com/nego?username=$username&role=$role");
     var apiResult = await myhttp.get(endpoint);
     //
 
@@ -135,6 +138,8 @@ class ModelNego {
     required String price,
     required String deadline,
     required String description,
+    required String username,
+    required String product_id,
   }
       // required String sebagai
       ) async {
@@ -142,7 +147,7 @@ class ModelNego {
 
     // print("password yang diterima : " + jeniskelamin.toString());
     var endpoint =
-        Uri.parse("https://bohlimo.com/nego?username=suhu&id_product=4");
+        Uri.parse("https://bohlimo.com/nego?username=$username&id_product=$product_id");
     var apiResult = await myhttp.post(endpoint, body: {
       "price": price,
       "deadline": deadline,

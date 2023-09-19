@@ -7,11 +7,13 @@ class FullDetailProductUI extends StatefulWidget {
   final String title;
   final String keterangan;
   final String username;
+  final String product_id;
   const FullDetailProductUI({
     Key? key,
     required this.title,
     required this.keterangan,
     required this.username,
+    required this.product_id,
   }) : super(key: key);
   @override
   State<FullDetailProductUI> createState() => _FullDetailProductUIState();
@@ -96,7 +98,7 @@ class _FullDetailProductUIState extends State<FullDetailProductUI> {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) {
-                      return FormNegosiasiUIUser();
+                      return FormNegosiasiUIUser(product_id: widget.product_id,);
                     },
                   ));
                 },

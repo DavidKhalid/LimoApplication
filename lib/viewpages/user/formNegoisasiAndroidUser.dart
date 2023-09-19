@@ -6,14 +6,27 @@ import 'package:limoapplication/model/modelnego.,dart/modelnego.dart';
 import 'package:limoapplication/model/session_manager.dart';
 import 'package:limoapplication/viewpages/user/fullDetailProductAndroid.dart';
 import 'package:limoapplication/viewpages/user/homeuser.dart';
+import 'package:limoapplication/model/session_manager.dart';
 
 class FormNegoisasiAndroidUser extends StatefulWidget {
+
+  final String product_id;
+
+  const FormNegoisasiAndroidUser({
+    Key? key,
+    // required this.id_status,
+    required this.product_id,
+  }) : super(key: key);
+
+
   @override
   State<FormNegoisasiAndroidUser> createState() =>
       _FormNegoisasiAndroidUserState();
 }
 
 class _FormNegoisasiAndroidUserState extends State<FormNegoisasiAndroidUser> {
+  SessionManager sessionManager = SessionManager();
+  String username = "";
   TextEditingController titleController = TextEditingController();
   TextEditingController dateLineController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -27,12 +40,20 @@ class _FormNegoisasiAndroidUserState extends State<FormNegoisasiAndroidUser> {
       ..indicatorType = EasyLoadingIndicatorType.circle
       ..loadingStyle = EasyLoadingStyle.light;
     EasyLoading.dismiss();
+    Future<String> getUsername = sessionManager.getUsername();
+    getUsername.then((value) {
+      setState(() {
+        username = value;
+      });
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
   }
+
+   
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +148,10 @@ class _FormNegoisasiAndroidUserState extends State<FormNegoisasiAndroidUser> {
                   ModelNego.createNego(
                           price: priceController.text,
                           deadline: dateLineController.text,
-                          description: descriptionController.text)
+                          description: descriptionController.text,
+                          username: username,
+                          product_id: widget.product_id
+                          )
                       .then((value) {
                     ModelNego modelnego = value;
                     print(value.status);

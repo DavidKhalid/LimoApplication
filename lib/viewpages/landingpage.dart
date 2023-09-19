@@ -44,7 +44,7 @@ class LandingPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 30),
                       child: Text(
-                        "Layanan Freelance",
+                        "Layanan IT",
                         style: TextStyle(fontSize: 25, color: Colors.white),
                       ),
                     ),

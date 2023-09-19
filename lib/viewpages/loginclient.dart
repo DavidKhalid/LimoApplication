@@ -204,6 +204,7 @@ class _LoginPageState extends State<LoginPageClient> {
                                         portofolio: data?.portofolio.toString(),
                                       );
 
+                                      /// bikin easyloading success disini
                                       Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                           builder: (context) {
