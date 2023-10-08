@@ -181,10 +181,14 @@ class _LoginPageUserState extends State<LoginPageUser> {
                                   username: UsernameController.text,
                                   password: PasswordController.text,
                                 ).then(
-                                  (value) {
+                                  (value) async {
                                     ModelLoginUser modelLogin = value;
                                     print(value.status);
                                     if (value.status) {
+                                      EasyLoading.showSuccess(
+                                          "Anda Berhasil Login");
+                                      await Future.delayed(
+                                          Duration(milliseconds: 1000));
                                       Data? data = modelLogin.data![0];
                                       SessionManager session = SessionManager();
                                       session.setSession(
