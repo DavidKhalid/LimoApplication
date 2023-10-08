@@ -322,7 +322,7 @@ class _HomeUserState extends State<HomeUser> {
         ],
       ),
       FutureBuilder<ModelNego>(
-          future: ModelNego.getDataNegoUser(),
+          future: ModelNego.getDataNegoUser(username: username),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -335,6 +335,17 @@ class _HomeUserState extends State<HomeUser> {
                   return const Center(child: Text("Error, Data not Found"));
                 } else {
                   print("Data Founded");
+
+                  if (snapshot.data!.data!.length == 0) {
+                    return Center(
+                        child: Text(
+                      "Belum Ada Transaksi Nego User",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ));
+                  }
 
                   return ListView.builder(
                     itemCount: snapshot.data!.data!.length,
@@ -357,6 +368,7 @@ class _HomeUserState extends State<HomeUser> {
                                     return PendingPage();
                                   },
                                 ));
+                                return;
                                 // bikin satu halaman lagi untuk pending
                                 // bikin satu navigator lagi yang kalau di click akan menuju ke halaman tolak
                                 // untuk menampilkan status di tolak

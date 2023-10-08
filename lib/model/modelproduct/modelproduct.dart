@@ -225,7 +225,7 @@ class ModelProduct {
     print("password yang diterima : " + kategori.toString());
 
     // print("password yang diterima : " + jeniskelamin.toString());
-    var endpoint = Uri.parse("https://bohlimo.com/product?username=davidk");
+    var endpoint = Uri.parse("https://bohlimo.com/product?username=$username");
     var apiResult = await myhttp.post(endpoint, body: {
       "username": username,
       "productName": productname,

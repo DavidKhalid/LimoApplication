@@ -805,7 +805,8 @@ class _HomeClientState extends State<HomeClient> {
       //   ],
       // ),
       FutureBuilder<ModelNego>(
-          future: nego,
+          future:
+              ModelNego.getDataNegoClient(username: username, role: "client"),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -818,11 +819,12 @@ class _HomeClientState extends State<HomeClient> {
                   return const Center(child: Text("Error, Data not Found"));
                 } else {
                   print("Data Founded");
-
+                  print(username);
+                  print("penanda");
                   if (snapshot.data!.data!.length == 0) {
                     return Center(
                         child: Text(
-                      "Belum Ada Transaksi",
+                      "Belum Ada Transaksi Nego Client",
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.black,
@@ -1044,10 +1046,15 @@ class _HomeClientState extends State<HomeClient> {
                                                                 MaterialPageRoute(
                                                           builder: (context) {
                                                             return TrackingProgressClient(
-                                                                id_transaksi: value
-                                                                    .data![0]
-                                                                    .id_transksi
-                                                                    .toString());
+                                                              id_transaksi: value
+                                                                  .data![0]
+                                                                  .id_transksi
+                                                                  .toString(),
+                                                              status: value
+                                                                  .data![0]
+                                                                  .status
+                                                                  .toString(),
+                                                            );
                                                           },
                                                         ));
                                                       });

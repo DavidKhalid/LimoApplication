@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:http/retry.dart';
 import 'package:limoapplication/model/modeltransaksi/modeltransaksi.dart';
 import 'package:limoapplication/model/modeltransaksi/modemessage.dart';
 import 'package:limoapplication/viewpages/client/homeclient.dart';
 
 class TrackingProgressClient extends StatefulWidget {
   final String id_transaksi;
+  final String status;
 
   const TrackingProgressClient({
     Key? key,
     required this.id_transaksi,
+    required this.status,
   }) : super(key: key);
   @override
   State<TrackingProgressClient> createState() => _TrackingProgressClientState();
@@ -39,6 +42,21 @@ class _TrackingProgressClientState extends State<TrackingProgressClient> {
   Widget build(BuildContext context) {
     final mediaqueryWidth = MediaQuery.of(context).size.width;
     final mediaqueryHeight = MediaQuery.of(context).size.height;
+    print(widget.status);
+    if (widget.status == "2") {
+      print("Transaksi selesai detail akan ditampilkan");
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text("Halaman Transaksi"),
+          ),
+          body: Center(
+              child:
+                  Text("Project  telah selesai dikerjakan dan telah dikirim")),
+        ),
+      );
+    }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -148,7 +166,6 @@ class _TrackingProgressClientState extends State<TrackingProgressClient> {
                       return HomeClient(
                         // id_status: "0",
                         statusproduct: "0",
-                        
                       );
                     },
                   ));

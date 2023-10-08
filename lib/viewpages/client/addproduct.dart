@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:limoapplication/model/modelproduct/modelproduct.dart';
 import 'package:limoapplication/viewpages/client/homeclient.dart';
+import 'package:limoapplication/model/session_manager.dart';
 
 class AddProduct extends StatefulWidget {
   @override
@@ -14,6 +15,9 @@ class _AddProductState extends State<AddProduct> {
   TextEditingController categoryController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
+  SessionManager sessionManager = SessionManager();
+  String username = "";
+
   @override
   void initState() {
     super.initState();
@@ -22,6 +26,13 @@ class _AddProductState extends State<AddProduct> {
       ..indicatorType = EasyLoadingIndicatorType.circle
       ..loadingStyle = EasyLoadingStyle.light;
     EasyLoading.dismiss();
+
+    Future<String> getUsername = sessionManager.getUsername();
+    getUsername.then((value) {
+      setState(() {
+        username = value;
+      });
+    });
   }
 
   @override
@@ -155,7 +166,7 @@ class _AddProductState extends State<AddProduct> {
                       return;
                     }
                     ModelProduct.postProduct(
-                            username: "davidk",
+                            username: username,
                             productname: productnameController.text,
                             price: priceController.text,
                             kategori: categoryController.text,
