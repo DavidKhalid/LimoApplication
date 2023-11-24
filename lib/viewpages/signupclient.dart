@@ -43,8 +43,8 @@ class _SignUpState extends State<SignUpClient> {
 
     double getSmallDiameter = MediaQuery.of(context).size.width * 2 / 3;
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       builder: EasyLoading.init(),
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Stack(
           children: [
@@ -386,10 +386,14 @@ class _SignUpState extends State<SignUpClient> {
                                         alamat: alamatController.text,
                                         portofolio: portofolioController.text)
                                     .then(
-                                  (value) {
+                                  (value) async {
                                     // ModelSignUp data = value;
                                     print(value);
                                     if (value.status) {
+                                      EasyLoading.showSuccess(
+                                          "Anda Berhasil SIGN UP");
+                                      await Future.delayed(
+                                          Duration(milliseconds: 1500));
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) {

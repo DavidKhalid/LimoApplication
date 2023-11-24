@@ -70,127 +70,157 @@ class _ProductCatergoryUIState extends State<ProductCatergoryUI> {
                                 } else {
                                   print("Data Founded");
 
-                                  return ListView.builder(
-                                      itemCount: snapshot.data!.data!.length,
-                                      shrinkWrap: true,
-                                      itemBuilder: (ctx, index) {
-                                        print(snapshot);
-                                        return Container(
-                                          margin: EdgeInsets.all(20),
-                                          width: MediaQueryWidth * 8,
-                                          height: BodyHeight * 0.2,
-                                          decoration: BoxDecoration(
-                                            color: Colors.blueGrey.shade100
-                                                .withOpacity(0.6),
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          child: Column(
+                                  return Container(
+                                    height: BodyHeight,
+                                    child: ListView.builder(
+                                        itemCount: snapshot.data!.data!.length,
+                                        shrinkWrap: true,
+                                        itemBuilder: (ctx, index) {
+                                          print(snapshot);
+                                          return Column(
                                             children: [
-                                              ListTile(
-                                                contentPadding:
-                                                    EdgeInsets.all(10),
-                                                leading: CircleAvatar(),
-                                                title: Text(
-                                                  snapshot.data!.data![index]
-                                                      .productName
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                              Container(
+                                                margin: EdgeInsets.all(20),
+                                                width: MediaQueryWidth * 8,
+                                                height: BodyHeight * 0.2,
+                                                decoration: BoxDecoration(
+                                                  color: Colors
+                                                      .blueGrey.shade100
+                                                      .withOpacity(0.6),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
                                                 ),
-                                                subtitle: Text(
-                                                  snapshot.data!.data![index]
-                                                      .username
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                trailing: GestureDetector(
-                                                    onTap: () {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                              MaterialPageRoute(
-                                                        builder: (context) {
-                                                          return FullDetailProductUI(
-                                                            title: snapshot
-                                                                .data!
-                                                                .data![index]
-                                                                .productName
-                                                                .toString(),
-                                                            keterangan: snapshot
-                                                                .data!
-                                                                .data![index]
-                                                                .keterangan
-                                                                .toString(),
-                                                            username: snapshot
-                                                                .data!
-                                                                .data![index]
-                                                                .username
-                                                                .toString(),
-                                                            product_id: snapshot.data!.data![index].id.toString(),
-                                                          );
-                                                        },
-                                                      ));
-                                                    },
-                                                    child: Icon(
-                                                      Icons
-                                                          .arrow_circle_right_outlined,
-                                                      size: 34,
-                                                    )),
-                                              ),
-                                              SizedBox(
-                                                height: 7,
-                                              ),
-                                              Divider(
-                                                color: Colors.black87,
-                                                height: 5,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 10),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
+                                                child: Column(
                                                   children: [
-                                                    Text.rich(
-                                                      TextSpan(
+                                                    ListTile(
+                                                      contentPadding:
+                                                          EdgeInsets.all(10),
+                                                      leading: CircleAvatar(),
+                                                      title: Text(
+                                                        snapshot
+                                                            .data!
+                                                            .data![index]
+                                                            .productName
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      subtitle: Text(
+                                                        snapshot
+                                                            .data!
+                                                            .data![index]
+                                                            .username
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      trailing: GestureDetector(
+                                                          onTap: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .push(
+                                                                    MaterialPageRoute(
+                                                              builder:
+                                                                  (context) {
+                                                                return FullDetailProductUI(
+                                                                  title: snapshot
+                                                                      .data!
+                                                                      .data![
+                                                                          index]
+                                                                      .productName
+                                                                      .toString(),
+                                                                  keterangan: snapshot
+                                                                      .data!
+                                                                      .data![
+                                                                          index]
+                                                                      .keterangan
+                                                                      .toString(),
+                                                                  username: snapshot
+                                                                      .data!
+                                                                      .data![
+                                                                          index]
+                                                                      .username
+                                                                      .toString(),
+                                                                  product_id: snapshot
+                                                                      .data!
+                                                                      .data![
+                                                                          index]
+                                                                      .id
+                                                                      .toString(),
+                                                                );
+                                                              },
+                                                            ));
+                                                          },
+                                                          child: Icon(
+                                                            Icons
+                                                                .arrow_circle_right_outlined,
+                                                            size: 34,
+                                                          )),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 7,
+                                                    ),
+                                                    Divider(
+                                                      color: Colors.black87,
+                                                      height: 5,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 10),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
                                                         children: [
-                                                          TextSpan(
-                                                            text: "Price : ",
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                          ),
-                                                          TextSpan(
-                                                            text: snapshot
-                                                                .data!
-                                                                .data![index]
-                                                                .price
-                                                                .toString(),
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                          ),
+                                                          Text.rich(
+                                                            TextSpan(
+                                                              children: [
+                                                                TextSpan(
+                                                                  text:
+                                                                      "Price : ",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                                ),
+                                                                TextSpan(
+                                                                  text: snapshot
+                                                                      .data!
+                                                                      .data![
+                                                                          index]
+                                                                      .price
+                                                                      .toString(),
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          )
                                                         ],
                                                       ),
                                                     )
                                                   ],
                                                 ),
-                                              )
+                                              ),
                                             ],
-                                          ),
-                                        );
-                                      });
+                                          );
+                                        }),
+                                  );
                                   //
                                 }
                             }

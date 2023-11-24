@@ -8,7 +8,6 @@ import 'package:limoapplication/viewpages/user/homeuser.dart';
 import 'package:limoapplication/model/session_manager.dart';
 
 class FormNegosiasiUIUser extends StatefulWidget {
-
   final String product_id;
 
   const FormNegosiasiUIUser({
@@ -160,12 +159,12 @@ class _FormNegosiasiUIUserState extends State<FormNegosiasiUIUser> {
                     return;
                   }
                   ModelNego.createNego(
-                    price: priceController.text,
-                    deadline: dateLineController.text,
-                    description: descriptionController.text,
-                    username: username,
-                    product_id: widget.product_id
-                  ).then((value) {
+                          price: priceController.text,
+                          deadline: dateLineController.text,
+                          description: descriptionController.text,
+                          username: username,
+                          product_id: widget.product_id)
+                      .then((value) {
                     ModelNego modelnego = value;
                     print(value.status);
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
